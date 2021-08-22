@@ -1,0 +1,41 @@
+{
+  "name": "kuna_doge",
+  "version": "0.1.0",
+  "description": "Doge currency Kuna market data fetcher",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky install"
+  },
+  "keywords": [
+    "raycast",
+    "raycastapp",
+    "kuna",
+    "doge",
+    "ticker"
+  ],
+  "author": "Eugene Chulkov<genechulkov@gmail.com>",
+  "license": "MIT",
+  "engines": {
+    "node": ">=12"
+  },
+  "dependencies": {
+    "axios": "0.21.1"
+  },
+  "devDependencies": {
+    "husky": "4.3.8",
+    "lint-staged": "^11.1.2",
+    "prettier": "^2.3.2"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged"
+    }
+  },
+  "lint-staged": {
+    "*.{js,json}": [
+      "prettier --write",
+      "git add"
+    ]
+  }
+}
