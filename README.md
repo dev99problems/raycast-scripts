@@ -12,4 +12,14 @@ just the small simple things, which make my life easier.
 
 ## List of scripts
 💴 kuna_doge
-
+Gets the latest DOGE/UAH information from [kuna.io](https://kuna.io/markets/dogeuah), where
+```
+lastPrice — last price
+change24Percent — change of price in 24 hours
+vol24h — volume of trade by ticker in 24h 
+max24h — maximum price in 24h
+min24h — minimum price in 24h
+sym — ticker of DOGE/UAH pair
+date — datetime of request, currently in HH:MM:HH format
+```
+![kuna_doge.png](screenshots/kuna_doge.png)
