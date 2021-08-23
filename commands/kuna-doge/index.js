@@ -1,8 +1,10 @@
 #!/Users/gene/.nvm/versions/node/v15.11.0/bin/node
+// NOTE: this node setup️ is my current setup and will definitely differ
+// on your machine
 
 // Required parameters:
 // @raycast.schemaVersion 1
-// @raycast.title kuna_doge
+// @raycast.title kuna-doge
 // @raycast.mode fullOutput
 
 // Optional parameters:
