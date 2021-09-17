@@ -14,37 +14,36 @@
 // @raycast.authorURL https://github.com/dev99problems
 
 const { Octokit } = require('octokit')
-const { displayOutput } = require('./output.js')
+const { displayOutput, colors } = require('./output.js')
 const ENV = require('./env')
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
 const octokit = new Octokit({ auth: ENV.authToken })
 
-const extractPrData = (pr) => ({
+const extractPrData = pr => ({
   url: pr.html_url,
   number: pr.number,
   title: pr.title,
   state: pr.state,
 })
 
-const getOpenPRs = async ({ owner = ENV.owner, repo, state = 'open', creator = ENV.creator }) => {
-  const { data } =
-    (await octokit.request('GET /repos/{owner}/{repo}/issues', {
-      owner,
-      repo,
-      state,
-      creator,
-      is: 'pr',
-    })) || { data: []}
+const getRepoOpenPRs = async ({ owner, repo, state = 'open', creator = ENV.creator }) => {
+  const { data } = (await octokit.request('GET /repos/{owner}/{repo}/issues', {
+    owner,
+    repo,
+    state,
+    creator,
+    is: 'pr',
+  })) || { data: [] }
 
   return data
 }
 
-const getAllPRs = async reposList => {
+const getAllPRs = async (owner, reposList) => {
   let result = {}
 
-  for (repo of reposList) {
-    const openPRs = await getOpenPRs({ repo })
+  for (const repo of reposList) {
+    const openPRs = await getRepoOpenPRs({ owner, repo })
     if (openPRs && openPRs.length) {
       result[repo] = openPRs.map(extractPrData)
     }
@@ -55,8 +54,16 @@ const getAllPRs = async reposList => {
 
 ;(async () => {
   try {
-    const allPRs = await getAllPRs(ENV.repos)
-    displayOutput(allPRs)
+    const { projects } = ENV
+    for (const project of Object.keys(projects)) {
+      const color = project === 'personal' ? colors.FgGreen : colors.FgRed
+      console.log(color + project.toUpperCase() + ':')
+      
+      const { owner, repos } = projects[project]
+
+      const allPRs = await getAllPRs(owner, repos)
+      displayOutput(allPRs)
+    }
   } catch (err) {
     console.error(err)
   }
