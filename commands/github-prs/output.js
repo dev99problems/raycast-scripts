@@ -35,3 +35,4 @@ const displayOutput = allPRs => {
 }
 
 exports.displayOutput = displayOutput
+exports.colors = colors
