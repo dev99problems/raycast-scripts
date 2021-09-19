@@ -14,7 +14,7 @@
 // @raycast.authorURL https://github.com/dev99problems
 
 const { Octokit } = require('octokit')
-const { displayPRs, displaySectionName } = require('./output.js')
+const { displayPrs, displaySectionName } = require('./output.js')
 const ENV = require('./env')
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
@@ -27,7 +27,7 @@ const extractPrData = pr => ({
   state: pr.state,
 })
 
-const getRepoOpenPRs = async ({ owner, repo, state = 'open', creator = ENV.creator }) => {
+const getRepoOpenPrs = async ({ owner, repo, state = 'open', creator = ENV.creator }) => {
   const { data } = (await octokit.request('GET /repos/{owner}/{repo}/issues', {
     owner,
     repo,
@@ -39,11 +39,11 @@ const getRepoOpenPRs = async ({ owner, repo, state = 'open', creator = ENV.creat
   return data
 }
 
-const getAllPRs = async (owner, reposList) => {
+const getSectionProjectsPrs = async (owner, reposList) => {
   let result = {}
 
   for (const repo of reposList) {
-    const openPRs = await getRepoOpenPRs({ owner, repo })
+    const openPRs = await getRepoOpenPrs({ owner, repo })
     if (openPRs && openPRs.length) {
       result[repo] = openPRs.map(extractPrData)
     }
@@ -55,13 +55,16 @@ const getAllPRs = async (owner, reposList) => {
 ;(async () => {
   try {
     const { projects } = ENV
-    for (const section of Object.keys(projects)) {
+    const keys = Object.keys;
+    
+    for (const section of keys(projects)) {
       const { owner, repos } = projects[section]
 
-      const allPRs = await getAllPRs(owner, repos)
+      const allPRs = await getSectionProjectsPrs(owner, repos)
+      const anyPrInSection = !!keys(allPRs)?.length
 
-      displaySectionName(section)
-      displayPRs(allPRs)
+      anyPrInSection && displaySectionName(section)
+      displayPrs(allPRs)
     }
   } catch (err) {
     console.error(err)
