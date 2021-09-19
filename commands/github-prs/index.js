@@ -14,7 +14,7 @@
 // @raycast.authorURL https://github.com/dev99problems
 
 const { Octokit } = require('octokit')
-const { displayOutput, colors } = require('./output.js')
+const { displayPRs, displaySectionName } = require('./output.js')
 const ENV = require('./env')
 
 // Create a personal access token at https://github.com/settings/tokens/new?scopes=repo
@@ -55,14 +55,13 @@ const getAllPRs = async (owner, reposList) => {
 ;(async () => {
   try {
     const { projects } = ENV
-    for (const project of Object.keys(projects)) {
-      const color = project === 'personal' ? colors.FgGreen : colors.FgRed
-      console.log(color + project.toUpperCase() + ':')
-      
-      const { owner, repos } = projects[project]
+    for (const section of Object.keys(projects)) {
+      const { owner, repos } = projects[section]
 
       const allPRs = await getAllPRs(owner, repos)
-      displayOutput(allPRs)
+
+      displaySectionName(section)
+      displayPRs(allPRs)
     }
   } catch (err) {
     console.error(err)
