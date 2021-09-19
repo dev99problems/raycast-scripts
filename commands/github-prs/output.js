@@ -22,7 +22,7 @@ const prepareForOutput = (pr, idx) => {
   return row
 }
 
-const displayOutput = allPRs => {
+const displayPrs = allPRs => {
   Object.keys(allPRs).forEach(repoName => {
     const repoPRs = allPRs[repoName]
     const repositoryName = `${FgBlue}${repoName}:\n`
@@ -34,5 +34,14 @@ const displayOutput = allPRs => {
   })
 }
 
-exports.displayOutput = displayOutput
-exports.colors = colors
+const displaySectionName = section => {
+  const colorMap = {
+    work: FgRed,
+    personal: FgGreen,
+  }
+  
+  console.log(colorMap[section] + section.toUpperCase() + ':')
+}
+
+exports.displayPrs = displayPrs
+exports.displaySectionName = displaySectionName
