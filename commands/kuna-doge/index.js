@@ -15,16 +15,7 @@
 // @raycast.authorURL https://github.com/dev99problems
 // TODO: @genechulkov get rid of axios
 const axios = require('axios')
-const { colors } = require('./colors')
-
-const outputColors = {
-  lastPrice: colors.FgYellow,
-  change24hPercent: colors.FgBlue,
-  max24h: colors.FgGreen,
-  min24h: colors.FgRed,
-  error: colors.FgRed,
-  default: colors.FgCyan,
-}
+const { outputColors, outputFieldsMap, formatNumber, leftPad} = require('./output')
 
 const ENV = {
   // API docs: https://docs.kuna.io/docs/последние-данные-по-рынку-тикеры
@@ -43,9 +34,9 @@ const getLatestInfo = async tickersList => {
     return {
       lastPrice: `${lastPrice} UAH`,
       change24hPercent: `${change24hPercent} %`,
-      vol24h,
-      max24h,
-      min24h,
+      vol24h: formatNumber(vol24h),
+      max24h: `${max24h} UAH`,
+      min24h: `${min24h} UAH`,
       sym,
       date,
     }
@@ -61,6 +52,9 @@ const getLatestInfo = async tickersList => {
 
   for (item in res) {
     const color = outputColors[item] ?? outputColors.default
-    console.log(`${color} ${item} = `, res[item])
+    item === 'sym' && console.log('-------------------------')
+
+    const fieldDescription = outputFieldsMap[item]
+    console.log(`${color}${fieldDescription}${leftPad(fieldDescription)} = `, res[item])
   }
 })()
