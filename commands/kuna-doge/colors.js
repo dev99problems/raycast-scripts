@@ -1,33 +1,35 @@
+const init = start => `\x1b[${start}m`
+
 const colorUtils = {
-  Reset: '\x1b[0m',
-  Bright: '\x1b[1m',
-  Dim: '\x1b[2m',
-  Underscore: '\x1b[4m',
-  Blink: '\x1b[5m',
-  Reverse: '\x1b[7m',
-  Hidden: '\x1b[8m',
+  Reset: init(0),
+  Bright: init(1),
+  Dim: init(2),
+  Underscore: init(4),
+  Blink: init(5),
+  Reverse: init(7),
+  Hidden: init(8),
 }
 
 const fgColors = {
-  FgBlack: '\x1b[30m',
-  FgRed: '\x1b[31m',
-  FgGreen: '\x1b[32m',
-  FgYellow: '\x1b[33m',
-  FgBlue: '\x1b[34m',
-  FgMagenta: '\x1b[35m',
-  FgCyan: '\x1b[36m',
-  FgWhite: '\x1b[37m',
+  black: init(30),
+  red: init(31),
+  green: init(32),
+  yellow: init(33),
+  blue: init(34),
+  magenta: init(35),
+  cyan: init(36),
+  white: init(37),
 }
 
 const bgColors = {
-  BgBlack: '\x1b[40m',
-  BgRed: '\x1b[41m',
-  BgGreen: '\x1b[42m',
-  BgYellow: '\x1b[43m',
-  BgBlue: '\x1b[44m',
-  BgMagenta: '\x1b[45m',
-  BgCyan: '\x1b[46m',
-  BgWhite: '\x1b[47m',
+  BgBlack: init(40),
+  BgRed: init(41),
+  BgGreen: init(42),
+  BgYellow: init(43),
+  BgBlue: init(44),
+  BgMagenta: init(45),
+  BgCyan: init(46),
+  BgWhite: init(47),
 }
 
 exports.colors = {
