@@ -18,26 +18,17 @@ just the small simple things, which `make my life easier`.
 ### 💴 kuna-doge
 
 
-Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah), where
+Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
 
-| **Field name**      | **Description**                                            |
-----------------------|------------------------------------------------------------|
-| **lastPrice**       | last price                                                 |
-| **change24Percent** | `change` of price in `24 hours`                            |
-| **vol24h**          | `volume` of trade by ticker in `24 hours`                  |
-| **max24h**          | `maximum` price in `24 hours`                              |
-| **min24h**          | `minimum` price in `24 hours`                              |
-| **sym**             | `ticker` of `DOGE/UAH` pair                                |
-| **date**            | `datetime` of request, currently in `HH:MM:SS` format      |
-
-![kuna_doge.png](images/kuna-doge.png)
+<img src="./images/kuna-doge.png" alt="drawing" width="570" />
 
 ### 🤖 pulls:open
 
 
 Gets all open `Github pull-requests` of author, from a `list of projects`, grouped by the `project`.
 
-![pulls-open.jpg](images/pulls-open.jpg)
+<img src="./images/pulls-open.jpg" alt="drawing" width="570" />
+
 #### Motivation
 Even though, `Raycast` has this functionality `out of the box`, if you use your `personal` Github account for both **personal**
 projects and **private** projects of your work `organization`, you often need to request the broader list of `access` in your 
