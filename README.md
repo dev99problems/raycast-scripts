@@ -15,7 +15,7 @@ So `this repo` is a home for my personal `scripts`, which I use pretty often. No
 just the small simple things, which `make my life easier`.
 
 ## List of commands
-### 💴 kuna-doge
+### 💴 kuna:doge
 
 
 Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
@@ -25,7 +25,7 @@ Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/
 ### 🤖 pulls:open
 
 
-Gets all open `Github pull-requests` of author, from a `list of projects`, grouped by the `project`.
+Gets all open `Github pull-requests` of author, from a `list of projects`, grouped by the `section`.
 
 <img src="./images/pulls-open.jpg" alt="drawing" width="570" />
 
@@ -37,7 +37,30 @@ organization for this integration to be able to get your `work pull-requests` an
 **`So to avoid that`** restrictions and additional access requests, this little fellow was implemented.
 
 #### Configuration
-TBD
+This command uses external config file `env.js` file of the next shape
+```js
+// github-prs/env.js
+module.exports = {
+    authToken: 'auth_token_goes_here', // your GH auth token
+    creator: 'dev99prblems', // your GH user name aka author
+    projects: {
+        work: {
+            owner: 'apple', // your organization name goes here
+            repos: [
+                'project1',
+                'project2'
+            ]
+        },
+        personal: {
+            owner: 'dev99problems',
+            repos: [
+                'raycast-scripts',
+                'alfred-translayta'
+            ]
+        }
+    }
+}
+```
 
 
 ## Related Links 
