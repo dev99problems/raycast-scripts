@@ -4,18 +4,18 @@
 
 // Required parameters:
 // @raycast.schemaVersion 1
-// @raycast.title kuna-doge
+// @raycast.title kuna:doge
 // @raycast.mode fullOutput
 
 // Optional parameters:
-// @raycast.icon 💴
+// @raycast.icon 📈
 
 // Documentation:
 // @raycast.author Eugene Chulkov
 // @raycast.authorURL https://github.com/dev99problems
 // TODO: @genechulkov get rid of axios
 const axios = require('axios')
-const { outputColors, outputFieldsMap, formatNumber, leftPad} = require('./output')
+const { outputColors, outputFieldsMap, formatNumber, leftPad } = require('./output')
 
 const ENV = {
   // API docs: https://docs.kuna.io/docs/последние-данные-по-рынку-тикеры
