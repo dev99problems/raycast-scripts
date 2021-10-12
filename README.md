@@ -15,7 +15,7 @@ So `this repo` is a home for my personal `scripts`, which I use pretty often. No
 just the small simple things, which `make my life easier`.
 
 ## List of commands
-### 💴 kuna:doge
+### 📈 kuna:doge
 
 
 Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
