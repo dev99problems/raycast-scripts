@@ -22,15 +22,16 @@ const prepareForOutput = (pr, idx) => {
   return row
 }
 
-const displayPrs = allPRs => {
+const displayPrs = (allPRs, owner) => {
   Object.keys(allPRs).forEach(repoName => {
     const repoPRs = allPRs[repoName]
-    const repositoryName = `${FgBlue}${repoName}:\n`
-    console.log(repositoryName)
+    const projectName = `@${owner}/${repoName}`
+    const repositoryName = `${FgBlue}${projectName}:\n`
+    process.stdout.write(repositoryName)
 
     const prsList = repoPRs.map(prepareForOutput).join('')
 
-    console.log(prsList)
+    process.stdout.write(prsList)
   })
 }
 
@@ -38,9 +39,11 @@ const displaySectionName = section => {
   const colorMap = {
     work: FgRed,
     personal: FgGreen,
+    default: FgCyan,
   }
-  
-  console.log(colorMap[section] + section.toUpperCase() + ':')
+  const color = colorMap?.[section] ?? colorMap.default;
+
+  process.stdout.write(color + section.toUpperCase() + ':' + '\n')
 }
 
 exports.displayPrs = displayPrs

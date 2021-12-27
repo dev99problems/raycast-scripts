@@ -42,7 +42,7 @@ This command uses external config file `env.js` file of the next shape
 // github-prs/env.js
 module.exports = {
     authToken: 'auth_token_goes_here', // your GH auth token
-    creator: 'dev99prblems', // your GH user name aka author
+    creator: 'dev99problems', // your GH user name aka author
     projects: {
         work: {
             owner: 'apple', // your organization name goes here

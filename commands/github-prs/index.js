@@ -56,7 +56,7 @@ const getSectionProjectsPrs = async (owner, reposList) => {
   try {
     const { projects } = ENV
     const keys = Object.keys;
-    
+
     for (const section of keys(projects)) {
       const { owner, repos } = projects[section]
 
@@ -64,7 +64,7 @@ const getSectionProjectsPrs = async (owner, reposList) => {
       const anyPrInSection = !!keys(allPRs)?.length
 
       anyPrInSection && displaySectionName(section)
-      displayPrs(allPRs)
+      displayPrs(allPRs, owner)
     }
   } catch (err) {
     console.error(err)
