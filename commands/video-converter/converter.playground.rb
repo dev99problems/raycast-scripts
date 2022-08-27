@@ -40,23 +40,32 @@ def convert(filename)
   command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1536:1024 -preset slow -crf 18 #{output.inspect} -y"
   # async
   fork { exec(command) }
-  # sync
-  # system(command)
 end
 
 input_files = Dir.children(INPUT)
+output_files = Dir.children(OUTPUT)
 
-input_files.each do |filename|
-  input, output = get_path(filename)
+def get_files_in_scope(input_files, output_files)
+  res = input_files.select do |filename|
+    input, _ = get_path(filename)
 
-  creation_date = File.birthtime(input)
+    creation_date = File.birthtime(input)
+    already_converted = output_files.include?(filename)
 
-  if Helpers::created_today?(creation_date)
-    p filename
-    convert(filename)
-
-    p ": #{Helpers::get_size(input)} -> #{Helpers::get_size(output)}"
+    is_in_scope = created_today?(creation_date) && not(already_converted)
+    filename if is_in_scope
   end
 end
 
+scope = get_files_in_scope(input_files, output_files)
 
+if scope.empty?
+  puts "Nothing to convert!"
+else
+  puts "Files to convert:"
+end
+
+scope.each do |filename|
+  p filename
+  # convert filename
+end

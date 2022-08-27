@@ -1,4 +1,5 @@
-#!/Users/gene/.nvm/versions/node/v15.11.0/bin/node
+#!/Users/gene/.nvm/versions/node/v16.11.1/bin/node
+
 
 // Required parameters:
 // @raycast.schemaVersion 1
