@@ -30,7 +30,7 @@ end
 
 def convert(filename)
   input, output = get_path(filename)
-  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1536:1024 -preset slow -crf 18 #{output.inspect} -y"
+  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1920:1024 -preset slow -crf 18 #{output.inspect} -y"
   # async
   fork { exec(command) }
 end
