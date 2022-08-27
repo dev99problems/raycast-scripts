@@ -69,6 +69,8 @@ Scales down all `today` created videos (screencasts), using `ffmpeg` into 1536:1
 Usually such scale down helps to lost up to 75% of the initial file size and after that — such files
 are super easy and fast to share.
 
+https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b29f-8276fc06a126.mov
+
 
 ### ✂️ trim:link
 
