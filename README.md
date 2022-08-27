@@ -22,6 +22,8 @@ Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/
 
 <img src="./images/kuna-doge.png" alt="drawing" width="570" />
 
+<br/>
+
 ### 🤖 pulls:open
 
 
@@ -62,6 +64,7 @@ module.exports = {
 }
 ```
 
+<br/>
 
 ### 📹 video:convert
 
@@ -71,6 +74,7 @@ are super easy and fast to share.
 
 https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b29f-8276fc06a126.mov
 
+<br/>
 
 ### ✂️ trim:link
 
