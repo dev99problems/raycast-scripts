@@ -63,9 +63,11 @@ module.exports = {
 ```
 
 
-### 📹video:convert
+### 📹 video:convert
 
-TBD
+Scales down all `today` created videos (screencasts), using `ffmpeg` into 1536:1024 format.
+Usually such scale down helps to lost up to 75% of the initial file size and after that — such files
+are super easy and fast to share.
 
 
 ### ✂️ trim:link
