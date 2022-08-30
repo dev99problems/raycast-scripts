@@ -37,7 +37,7 @@ end
 
 def convert(filename)
   input, output = get_path(filename)
-  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1536:1024 -preset slow -crf 18 #{output.inspect} -y"
+  command = "ffmpeg -i #{input} -hide_banner -loglevel error -vf scale=1920:1024 -preset slow -crf 18 #{output} -y"
   # async
   fork { exec(command) }
 end
@@ -51,8 +51,9 @@ def get_files_in_scope(input_files, output_files)
 
     creation_date = File.birthtime(input)
     already_converted = output_files.include?(filename)
+    is_directory = File.directory?(input)
 
-    is_in_scope = created_today?(creation_date) && not(already_converted)
+    is_in_scope = created_today?(creation_date) && (!already_converted) && (!is_directory)
     filename if is_in_scope
   end
 end
@@ -62,7 +63,7 @@ scope = get_files_in_scope(input_files, output_files)
 if scope.empty?
   puts "Nothing to convert!"
 else
-  puts "Files to convert:"
+  puts "Files to be converted:"
 end
 
 scope.each do |filename|
