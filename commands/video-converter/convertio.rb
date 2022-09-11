@@ -14,33 +14,41 @@
 INPUT = './input'
 OUTPUT = './output'
 
-module Helpers
+module Utils
   def created_today?(date)
     today = Time.now
     date.day == today.day && date.month == today.month
   end
+
+  def get_path(filename)
+    input_filepath = "#{INPUT}/#{filename}",
+    output_filepath = "#{OUTPUT}/#{filename}"
+  end
 end
 
-include Helpers
-
-def get_path(filename)
-  input_filepath = "#{INPUT}/#{filename}",
-  output_filepath = "#{OUTPUT}/#{filename}"
+module FS
+  def safe_children(dirname)
+    !Dir.exist?(dirname) && Dir.mkdir(dirname)
+    Dir.children(dirname)
+  end
 end
+
+include Utils
+include FS
 
 def convert(filename)
-  input, output = get_path(filename)
-  command = "ffmpeg -i #{input} -hide_banner -loglevel error -vf scale=1920:1024 -preset slow -crf 18 #{output} -y"
+  input, output = Utils.get_path(filename)
+  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1920:1024 -preset slow -crf 18 #{output.inspect} -y"
   # async
   fork { exec(command) }
 end
 
-input_files = Dir.children(INPUT)
-output_files = Dir.children(OUTPUT)
+input_files = FS.safe_children(INPUT)
+output_files = FS.safe_children(OUTPUT)
 
 def get_files_in_scope(input_files, output_files)
-  res = input_files.select do |filename|
-    input, _ = get_path(filename)
+  input_files.select do |filename|
+    input, _ = Utils.get_path(filename)
 
     creation_date = File.birthtime(input)
     already_converted = output_files.include?(filename)
