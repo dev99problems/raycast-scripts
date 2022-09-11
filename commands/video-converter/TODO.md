@@ -3,12 +3,12 @@
 ## TODO 🛠️:
 ### Phase 0:
 
-[ ] Add: check and `automatic` folders creation
+[X] Add: check and `automatic` folders creation
 [X] Add: skip files that are already in `output` folder
 [X] Try: how this works as `raycast-script` 
 [ ] Check: if that is possible to add `raycast` notification when all files are converted
 [ ] Think: whether you need to get the results of `compression`
-
+[ ] The results of compression can be done as a text file in `output` dir
 
 ---------------------------------------------------------------
 
