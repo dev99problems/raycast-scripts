@@ -14,18 +14,21 @@ Another **killer feature** — the ability to run scripts at `the fingertips `.
 So `this repo` is a home for my personal `scripts`, which I use pretty often. Nothing major, no rocket science,
 just the small simple things, which `make my life easier`.
 
+<br/>
+
 ## List of commands
-### 📈 kuna:doge
 
+### 📹 video:convert
 
-Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
+Scales down all `today` created videos (screencasts), using `ffmpeg` into 1920:1024 format.
+Usually such scale down helps to lost up to **75% of the initial file size** and after that — such files
+are super easy and fast to share.
 
-<img src="./images/kuna-doge.png" alt="drawing" width="570" />
+https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b29f-8276fc06a126.mov
 
 <br/>
 
 ### 🤖 pulls:open
-
 
 Gets all open `Github pull-requests` of author, from a `list of projects`, grouped by the `section`.
 
@@ -66,16 +69,6 @@ module.exports = {
 
 <br/>
 
-### 📹 video:convert
-
-Scales down all `today` created videos (screencasts), using `ffmpeg` into 1920:1024 format.
-Usually such scale down helps to lost up to **75% of the initial file size** and after that — such files
-are super easy and fast to share.
-
-https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b29f-8276fc06a126.mov
-
-<br/>
-
 ### ✂️ trim:link
 
 Trims the meta data from [Great Suspender](https://chrome.google.com/webstore/detail/the-great-suspender/jaekigmcljkkalnicnjoafgfjoefkpeg?hl=en) links.
@@ -83,6 +76,15 @@ Works pretty the same as [great-suspender-link-trimmer](https://github.com/dev99
 
 https://user-images.githubusercontent.com/6503508/137031968-ce1e2837-5a70-4e11-939f-97150e248289.mov
 
+<br/>
+
+### 📈 kuna:doge
+
+Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
+
+<img src="./images/kuna-doge.png" alt="drawing" width="570" />
+
+<br/>
 
 ## Related Links 
 Here is `repo` of [community driven scripts](https://github.com/raycast/script-commands) for `Raycast`
