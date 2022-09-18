@@ -28,6 +28,12 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 
 <br/>
 
+### 🛫 synclair:(up & down)
+
+Simply configured `rsync` command to sync local folder, full of `*.md` notes to iCloud.
+
+<br/>
+
 ### 🤖 pulls:open
 
 Gets all open `Github pull-requests` of author, from a `list of projects`, grouped by the `section`.
