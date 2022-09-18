@@ -32,6 +32,8 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 
 Simply configured `rsync` command to sync local folder, full of `*.md` notes to iCloud.
 
+<img width="1084" alt="synclair_dry_run" src="https://user-images.githubusercontent.com/6503508/190903826-73410d90-0156-4616-9ebf-43bd7c8aa44d.png">
+
 <br/>
 
 ### 🤖 pulls:open
