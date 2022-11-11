@@ -28,6 +28,16 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 
 <br/>
 
+
+### 💲 subsminder
+
+Displays current active `monthly` subscriptions I have (stored at `Airtable`)
+in a form table view with a `monthly total`.
+
+![subsminder](https://user-images.githubusercontent.com/6503508/201231535-5c93c0fc-f5d0-4e0e-ad29-bc2a2e197f63.png)
+
+<br/>
+
 ### 🛫 synclair:(up & down)
 
 Simply configured `rsync` command to sync local folder, full of `*.md` notes to iCloud.
@@ -42,38 +52,12 @@ Gets all open `Github pull-requests` of author, from a `list of projects`, group
 
 <img src="./images/pulls-open.jpg" alt="drawing" width="570" />
 
-#### Motivation
+#### Rationale
 Even though, `Raycast` has this functionality `out of the box`, if you use your `personal` Github account for both **personal**
 projects and **private** projects of your work `organization`, you often need to request the broader list of `access` in your 
 organization for this integration to be able to get your `work pull-requests` and it may be a problem.
 
-**`So to avoid that`** restrictions and additional access requests, this little fellow was implemented.
-
-#### Configuration
-This command uses external config file `env.js` file of the next shape
-```js
-// github-prs/env.js
-module.exports = {
-    authToken: 'auth_token_goes_here', // your GH auth token
-    creator: 'dev99problems', // your GH user name aka author
-    projects: {
-        work: {
-            owner: 'apple', // your organization name goes here
-            repos: [
-                'project1',
-                'project2'
-            ]
-        },
-        personal: {
-            owner: 'dev99problems',
-            repos: [
-                'raycast-scripts',
-                'alfred-translayta'
-            ]
-        }
-    }
-}
-```
+**`So to avoid those`** restrictions and additional access requests, this little fellow was implemented.
 
 <br/>
 
