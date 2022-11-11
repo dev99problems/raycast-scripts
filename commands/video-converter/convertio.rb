@@ -14,7 +14,7 @@
 INPUT = './input'
 OUTPUT = './output'
 
-module Utils
+module Utils # :nodoc:
   def created_today?(date)
     today = Time.now
     date.day == today.day && date.month == today.month
@@ -26,7 +26,7 @@ module Utils
   end
 end
 
-module FS
+module FS # :nodoc:
   def safe_children(dirname)
     !Dir.exist?(dirname) && Dir.mkdir(dirname)
     Dir.children(dirname)
@@ -48,13 +48,13 @@ output_files = FS.safe_children(OUTPUT)
 
 def get_files_in_scope(input_files, output_files)
   input_files.select do |filename|
-    input, _ = Utils.get_path(filename)
+    input, = Utils.get_path(filename)
 
     creation_date = File.birthtime(input)
     already_converted = output_files.include?(filename)
     is_directory = File.directory?(input)
 
-    is_in_scope = created_today?(creation_date) && (!already_converted) && (!is_directory)
+    is_in_scope = created_today?(creation_date) && !already_converted && !is_directory
     filename if is_in_scope
   end
 end
@@ -62,9 +62,9 @@ end
 scope = get_files_in_scope(input_files, output_files)
 
 if scope.empty?
-  puts "Nothing to convert!"
+  puts 'Nothing to convert!'
 else
-  puts "Files to be converted:"
+  puts 'Files to be converted:'
 end
 
 scope.each do |filename|
