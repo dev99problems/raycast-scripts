@@ -34,7 +34,7 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 Displays current active `monthly` subscriptions I have (stored at `Airtable`)
 in a form table view with a `monthly total`.
 
-![subsminder](https://user-images.githubusercontent.com/6503508/201231535-5c93c0fc-f5d0-4e0e-ad29-bc2a2e197f63.png)
+![subsminder](https://user-images.githubusercontent.com/6503508/202003263-452b190c-bdac-43ef-83a5-93a180e90391.jpg)
 
 <br/>
 
