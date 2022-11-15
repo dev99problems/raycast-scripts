@@ -11,8 +11,8 @@
 # @raycast.author Eugene Chulkov
 # @raycast.authorURL https://github.com/dev99problems
 
-require_relative 'lib/utils/fetch'
-require_relative 'lib/utils/print_buddy'
+require_relative 'lib/subs_minder/fetch'
+require_relative 'lib/subs_minder/print_buddy'
 
 local = false
 @active_subs = DataFetcher.new(local).active_subs

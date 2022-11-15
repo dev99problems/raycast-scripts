@@ -1,4 +1,6 @@
-# README
+--------
+README
+--------
 
 Tiny script for showing all currently active subscriptions to different 
 `services` and `digital products` or other activities.
