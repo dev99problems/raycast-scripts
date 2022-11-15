@@ -1,4 +1,6 @@
-# subs_minder playground
+--------
+MISC
+--------
 
 ## Articles
 * [Airtable-ruby](https://github.com/Airtable/airtable-ruby/blob/master/lib/airtable/table.rb)

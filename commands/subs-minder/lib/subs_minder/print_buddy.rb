@@ -20,7 +20,6 @@ class String
   end
 end
 
-
 class PrintBuddy # :nodoc:
   attr_reader :total
 
@@ -40,7 +39,7 @@ class PrintBuddy # :nodoc:
       price = sub['price']
       @total += price
 
-      price_output = '%0.2f💲' % [price]
+      price_output = format('%0.2f💲', price)
       puts "#{name.ljust(ROW_LEN - price_output.length)}".light_blue + "#{price_output}".green
     end
   end

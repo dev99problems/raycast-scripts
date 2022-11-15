@@ -1,5 +1,5 @@
-require_relative 'utils/fetch'
-require_relative 'utils/print_buddy'
+require_relative 'subs_minder/fetch'
+require_relative 'subs_minder/print_buddy'
 
 local = true
 # local = false
