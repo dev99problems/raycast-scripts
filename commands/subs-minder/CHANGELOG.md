@@ -2,6 +2,17 @@
 subsminder
 ---------
 
+
+## 0.1.2
+
+### Patch
+
+- d1ff9af: add better formatting for table
+- 78cffeb: add date to table header
+- dee8367: add paid and next payment indication
+- 5408fa0: add to .gitignore dev mock files
+
+
 ## 0.1.1
 
 ### Patch
