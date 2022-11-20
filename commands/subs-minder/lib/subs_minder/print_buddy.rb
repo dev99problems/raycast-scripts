@@ -24,6 +24,7 @@ end
 
 ROW_LEN = 50
 EMOJI_LEN = 2
+DATE_FORMAT = '%d %b'
 
 class Row # :nodoc:
   include Enumerable
@@ -42,7 +43,7 @@ class Row # :nodoc:
 
   def convert_date(date)
     date = Date.parse(date)
-    date.strftime('%d %b')
+    date.strftime(DATE_FORMAT)
   end
 
   def to_s
@@ -99,15 +100,22 @@ class PrintBuddy # :nodoc:
     table_data.each { |row| puts row }
   end
 
+  def print_header(amount_of_subs)
+    today = DateTime.now.strftime(DATE_FORMAT)
+    puts "#{' ' * EMOJI_LEN}#{today} Active monthly subs: #{amount_of_subs}".light_blue
+  end
+
   def print_total
     puts(' '.ljust(ROW_LEN - (@total.to_s.length + 1)) << "#{@total}$".green)
   end
 
   def print_month_payout(active_subs)
-    puts "Current monthly active subs: #{active_subs.length}".light_blue
+    puts
+    print_header(active_subs.length)
     print_horiz_line
     print_subs_table(active_subs)
     print_horiz_line
     print_total
+    puts
   end
 end
