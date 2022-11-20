@@ -25,6 +25,7 @@ end
 ROW_LEN = 50
 EMOJI_LEN = 2
 DATE_FORMAT = '%d %b'
+LEFT_MARGIN = ' ' * (EMOJI_LEN + 1)
 
 class Row # :nodoc:
   include Enumerable
@@ -49,7 +50,7 @@ class Row # :nodoc:
   def to_s
     valid_output = "#{@data['valid_to_formatted']} "
     price_output = format('%0.1f$', @data['price'])
-    name_output = data['name'].ljust(ROW_LEN - EMOJI_LEN - price_output.length - valid_output.length)
+    name_output = data['name'].ljust(ROW_LEN - price_output.length - valid_output.length)
 
     valid_output.green + name_output.light_blue + price_output.green
   end
@@ -67,7 +68,7 @@ class PrintBuddy # :nodoc:
   end
 
   def print_horiz_line
-    puts "#{'-' * ROW_LEN}".light_blue
+    puts "#{LEFT_MARGIN}#{'-' * ROW_LEN}".light_blue
   end
 
   def table_rows(active_subs)
@@ -84,11 +85,11 @@ class PrintBuddy # :nodoc:
 
     rows.map.with_index do |row, idx|
       if row.data['is_paid']
-        "✅#{row}"
+        "✅ #{row}"
       elsif next_payment_idx == idx
-        "➡️#{row}"
+        "👉 #{row}"
       else
-        ' ' * EMOJI_LEN + row.to_s
+        "#{LEFT_MARGIN}#{row}"
       end
     end
   end
@@ -102,11 +103,11 @@ class PrintBuddy # :nodoc:
 
   def print_header(amount_of_subs)
     today = DateTime.now.strftime(DATE_FORMAT)
-    puts "#{' ' * EMOJI_LEN}#{today} Active monthly subs: #{amount_of_subs}".light_blue
+    puts "#{LEFT_MARGIN}#{today} Active monthly subs: #{amount_of_subs}".light_blue
   end
 
   def print_total
-    puts(' '.ljust(ROW_LEN - (@total.to_s.length + 1)) << "#{@total}$".green)
+    puts(' '.ljust(ROW_LEN - (@total.to_s.length + 1) + LEFT_MARGIN.length) << "#{@total}$".green)
   end
 
   def print_month_payout(active_subs)
