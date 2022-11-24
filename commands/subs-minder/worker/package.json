@@ -1,7 +1,7 @@
 {
   "name": "subs_updater",
   "description": "CF worker to update subscription dates in Airtable",
-  "version": "0.1.0",
+  "version": "0.1.3",
   "private": true,
   "type": "module",
   "scripts": {

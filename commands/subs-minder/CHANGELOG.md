@@ -2,6 +2,13 @@
 subsminder
 ---------
 
+## 0.1.3
+
+### Patch
+
+- 841694d: add monthly subs. updater
+- 951d515: add bootstrapping files for worker
+
 
 ## 0.1.2
 
