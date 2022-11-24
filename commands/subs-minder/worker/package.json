@@ -1,0 +1,22 @@
+{
+  "name": "subs_updater",
+  "description": "CF worker to update subscription dates in Airtable",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "wrangler dev",
+    "start:c": "wrangler dev --test-scheduled",
+    "start:n": "node src/main.js",
+    "deploy": "wrangler publish",
+    "test": "jest"
+  },
+  "devDependencies": {
+    "jest": "29.3.1",
+    "node-fetch": "2.6.7",
+    "wrangler": "2.4.4"
+  },
+  "keywords": [],
+  "author": "Eugene Chulkov <genechulkov@gmail.com>",
+  "license": "MIT"
+}
