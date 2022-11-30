@@ -1,5 +1,5 @@
 require 'json'
-require_relative '.env'
+require_relative 'env'
 
 module Utils # :nodoc:
   def to_snake_case(word)
@@ -15,7 +15,7 @@ module Utils # :nodoc:
 
   def fetch_data
     base = 'https://api.airtable.com/v0'
-    `curl -s '#{base}/#{Env::APP}/#{Env::TABLE}?maxRecords=40&view=Grid%20view' \
+    `curl -s '#{base}/#{Env::BASE}/#{Env::TABLE}?maxRecords=40&view=Grid%20view' \
     -H 'Authorization: Bearer #{Env::KEY}' \
     | jq`
   end
