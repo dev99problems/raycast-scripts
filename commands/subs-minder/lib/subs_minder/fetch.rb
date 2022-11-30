@@ -26,9 +26,8 @@ class DataFetcher # :nodoc:
     end
   end
 
-  def active_subs
+  def active_subs(duration = 'monthly')
     subs = get_data
-    active_subs = subs.select { |item| item['status'] and item['multi_per_year'] != 1 }
-    active_subs
+    subs.select { |item| item['active'] and item['duration'] == duration }
   end
 end
