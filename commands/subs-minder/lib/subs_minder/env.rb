@@ -1,5 +1,5 @@
 module Env
-  KEY = ''
-  APP = ''
+  BASE = ''
   TABLE = 'subs'
+  KEY = ''
 end
