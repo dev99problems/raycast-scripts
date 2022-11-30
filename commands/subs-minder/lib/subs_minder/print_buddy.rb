@@ -36,10 +36,15 @@ class Row # :nodoc:
     @data = {}
 
     @data['name'] = sub['name']
+    @data['active'] = sub['active']
+    @data['renew'] = sub['renew']
     @data['price'] = sub['price']
-    @data['valid_to'] = sub['valid_through']
-    @data['valid_to_formatted'] = convert_date(sub['valid_through'])
-    @data['is_paid'] = Date.parse(@data['valid_to']) <= DateTime.now
+    @data['payment_date'] = sub['payment_date']
+    @data['has_passed'] = Date.parse(@data['payment_date']) <= DateTime.now
+  end
+
+  def payment_date
+    convert_date(@data['payment_date'])
   end
 
   def convert_date(date)
@@ -48,15 +53,17 @@ class Row # :nodoc:
   end
 
   def to_s
-    valid_output = "#{@data['valid_to_formatted']} "
+    payment_output = "#{self.payment_date} "
     price_output = format('%0.1f$', @data['price'])
-    name_output = data['name'].ljust(ROW_LEN - price_output.length - valid_output.length)
+    name_output = data['name'].ljust(ROW_LEN - price_output.length - payment_output.length)
 
-    valid_output.green + name_output.light_blue + price_output.green
+    (data['renew'] ? payment_output.green : payment_output.blue) + name_output.light_blue + price_output.green
   end
 
   def <=>(other)
-    other.data['valid_to_formatted'] <=> data['valid_to_formatted']
+    other_date = other.data['payment_date'].split('-').map(&:to_i)
+    date = @data['payment_date'].split('-').map(&:to_i)
+    Date.new(*other_date) <=> Date.new(*date)
   end
 end
 
@@ -80,12 +87,12 @@ class PrintBuddy # :nodoc:
   end
 
   def wrap_with_emojis(rows)
-    recent_paid_sub_idx = rows.index { |row| row.data['is_paid'] == true } || 0
+    recent_paid_sub_idx = rows.index { |row| row.data['has_passed'] == true } || rows.length
     next_payment_idx = [recent_paid_sub_idx - 1, 0].max
 
     rows.map.with_index do |row, idx|
-      if row.data['is_paid']
-        "✅ #{row}"
+      if row.data['has_passed']
+        row.data['renew'] ? "✅ #{row}" : "❌ #{row}"
       elsif next_payment_idx == idx
         "👉 #{row}"
       else
@@ -103,7 +110,7 @@ class PrintBuddy # :nodoc:
 
   def print_header(amount_of_subs)
     today = DateTime.now.strftime(DATE_FORMAT)
-    puts "#{LEFT_MARGIN}#{today} Active monthly subs: #{amount_of_subs}".light_blue
+    puts "#{LEFT_MARGIN}#{today} ".green << "Active monthly subs: #{amount_of_subs}".light_blue
   end
 
   def print_total
