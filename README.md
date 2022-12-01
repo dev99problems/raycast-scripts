@@ -32,11 +32,13 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 ### 💲 subsminder
 
 Displays current active `monthly` subscriptions I have (stored at `Airtable`)
-in a form table view with a `monthly total`.
+in a form of a table view with a `monthly total`, info about `paid` subs this month,
+`next` closest payment and auto cron updater of payment dates while `subs` remain marked as `renewd`.
 
-![subsminder](https://user-images.githubusercontent.com/6503508/202003263-452b190c-bdac-43ef-83a5-93a180e90391.jpg)
+![latest_subsmidner_screen](https://user-images.githubusercontent.com/6503508/204893478-3d6232c5-cf3c-4a6d-a998-90824db6e72e.jpg)
 
 <br/>
+
 
 ### 🛫 synclair:(up & down)
 
@@ -45,6 +47,7 @@ Simply configured `rsync` command to sync local folder, full of `*.md` notes to 
 <img width="1084" alt="synclair_dry_run" src="https://user-images.githubusercontent.com/6503508/190903826-73410d90-0156-4616-9ebf-43bd7c8aa44d.png">
 
 <br/>
+
 
 ### 🤖 pulls:open
 
@@ -60,6 +63,7 @@ organization for this integration to be able to get your `work pull-requests` an
 **`So to avoid those`** restrictions and additional access requests, this little fellow was implemented.
 
 <br/>
+
 
 ### ✂️ trim:link
 
