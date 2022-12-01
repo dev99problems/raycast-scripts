@@ -2,6 +2,18 @@
 subsminder
 ---------
 
+## 0.1.4
+
+### Patch
+
+- 66c404a: update worker air utils to be aligned with new table structure
+- 5b95a89: add fetch_to_file for worker local dev; change ENV vars names
+- a1ec2eb: add some refactoring tasks
+- 08b0a27: update printer due to new table structure
+- 8057b23: make duration configurable from outside
+- a75878f: rename env vars for ruby to be consistent with worker code
+- 85f0c33: rename .env.rb -> env.rb
+
 ## 0.1.3
 
 ### Patch
