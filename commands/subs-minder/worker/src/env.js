@@ -1,5 +1,5 @@
 export default {
-  base: '',
-  table: 'subs',
-  key: '',
+  BASE: '',
+  TABLE: 'subs',
+  KEY: '',
 }

@@ -8,6 +8,7 @@
     "start": "wrangler dev",
     "start:c": "wrangler dev --test-scheduled",
     "start:n": "node src/main.js",
+    "bootstrap:data": "node src/fetch_to_file.js",
     "deploy": "wrangler publish",
     "test": "jest"
   },
