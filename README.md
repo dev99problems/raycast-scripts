@@ -31,10 +31,14 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 
 ### 💲 subsminder
 
-Displays current active `monthly` subscriptions I have (stored at `Airtable`)
-in a form of a table view with a `monthly total`, info about `paid` subs this month,
-`next` closest payment and auto cron updater of payment dates while `subs` remain marked as `renewd`.
+Displays current active `monthly/yearly` subscriptions I have (stored at `Airtable`)
+in a form of a table view with `total` field, info about `paid` subs this month/year,
+`next` closest payment and auto cron updater of payment dates while `subs` remain marked as `renewed`.
 
+**Yearly subs**
+![subsminder_yearly](https://user-images.githubusercontent.com/6503508/205745717-4aa20bc1-7bcf-4ccb-9a87-d2417c5c686f.jpg)
+
+**Monthly subs**
 ![latest_subsmidner_screen](https://user-images.githubusercontent.com/6503508/204893478-3d6232c5-cf3c-4a6d-a998-90824db6e72e.jpg)
 
 <br/>
