@@ -24,7 +24,7 @@ end
 
 ROW_LEN = 50
 EMOJI_LEN = 2
-DATE_FORMAT = '%d %b'
+DATE_FORMAT = '%d %b %y'
 LEFT_MARGIN = ' ' * (EMOJI_LEN + 1)
 
 class Row # :nodoc:
@@ -117,7 +117,7 @@ class PrintBuddy # :nodoc:
     puts(' '.ljust(ROW_LEN - (@total.to_s.length + 1) + LEFT_MARGIN.length) << "#{@total}$".green)
   end
 
-  def print_month_payout(active_subs)
+  def print_active_payouts(active_subs)
     puts
     print_header(active_subs.length)
     print_horiz_line

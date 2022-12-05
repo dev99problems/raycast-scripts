@@ -6,4 +6,4 @@ local = true
 @active_subs = DataFetcher.new(local).active_subs
 
 p = PrintBuddy.new
-p.print_month_payout(@active_subs)
+p.print_active_payouts(@active_subs)
