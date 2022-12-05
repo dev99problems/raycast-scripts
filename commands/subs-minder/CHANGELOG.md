@@ -2,6 +2,15 @@
 subsminder
 ---------
 
+## 0.1.5
+
+### Patch
+
+- eaf410e: add duration period to output
+- 5868011: add yearly payouts script
+- 4c75342: convert DataFetcher constructor to accept "opts" hash
+
+
 ## 0.1.4
 
 ### Patch
@@ -13,6 +22,7 @@ subsminder
 - 8057b23: make duration configurable from outside
 - a75878f: rename env vars for ruby to be consistent with worker code
 - 85f0c33: rename .env.rb -> env.rb
+
 
 ## 0.1.3
 
