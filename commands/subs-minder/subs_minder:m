@@ -1,7 +1,8 @@
 #!/usr/bin/env ruby
 # Required parameters:
 # @raycast.schemaVersion 1
-# @raycast.title subsminder
+# @raycast.title subsminder:m
+# @raycast.packageName Monthly subscriptions
 # @raycast.mode fullOutput
 
 # Optional parameters:
@@ -14,8 +15,7 @@
 require_relative 'lib/subs_minder/fetch'
 require_relative 'lib/subs_minder/print_buddy'
 
-local = false
-@active_subs = DataFetcher.new(local).active_subs
+@active_subs = DataFetcher.new(local: false).active_subs('monthly')
 
 p = PrintBuddy.new
-p.print_month_payout(@active_subs)
+p.print_active_payouts(@active_subs)
