@@ -3,8 +3,8 @@ require_relative 'utils'
 class DataFetcher # :nodoc:
   include Utils
 
-  def initialize(opts)
-    @is_local = opts[:is_local]
+  def initialize(is_local: false)
+    @is_local = is_local
   end
 
   def fetch_local

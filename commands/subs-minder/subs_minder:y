@@ -6,7 +6,7 @@
 # @raycast.mode fullOutput
 
 # Optional parameters:
-# @raycast.icon 💱
+# @raycast.icon 💰
 
 # Documentation:
 # @raycast.author Eugene Chulkov
@@ -15,7 +15,8 @@
 require_relative 'lib/subs_minder/fetch'
 require_relative 'lib/subs_minder/print_buddy'
 
-active_subs = DataFetcher.new(local: false).active_subs('yearly')
+duration = 'yearly'
+active_subs = DataFetcher.new().active_subs(duration)
 
-p = PrintBuddy.new
+p = PrintBuddy.new(duration: duration)
 p.print_active_payouts(active_subs)
