@@ -70,8 +70,9 @@ end
 class PrintBuddy # :nodoc:
   attr_reader :total
 
-  def initialize
+  def initialize(opts)
     @total = 0
+    @duration = opts[:duration]
   end
 
   def print_horiz_line
@@ -110,7 +111,7 @@ class PrintBuddy # :nodoc:
 
   def print_header(amount_of_subs)
     today = DateTime.now.strftime(DATE_FORMAT)
-    puts "#{LEFT_MARGIN}#{today} ".green << "Active monthly subs: #{amount_of_subs}".light_blue
+    puts "#{LEFT_MARGIN}#{today} ".green << "Active #{@duration} subs: #{amount_of_subs}".light_blue
   end
 
   def print_total
