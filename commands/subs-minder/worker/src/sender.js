@@ -1,5 +1,5 @@
 // import fetch from 'node-fetch';
-import { error, log, toCapitalCase } from './utils.js';
+import { error, log, toCapitalCase, format_date } from './utils.js';
 
 const url = '<YOUR_JEREMY_URL>'
 
@@ -35,25 +35,24 @@ class Sender {
   }
 
   /**
-    Next payments:
-    <b>2022-12-02</b> First sub                5$
-    <b>2022-12-02</b> Second sub             7.5$
+    💲 <b>Dec 21</b> next <b>Monthly</b> payments:
+    👉 <b>Dec 22</b> First sub | <b>5$</b>
+    👉 <b>Dec 22</b> Second sub | <b>7.5$</b>
   */
   convert_to_message(subs) {
-    const MESSAGE_LEN = 50
-    const DATE_LEN = 10
+    const MESSAGE_LEN = 42
     const period_duration = subs?.[0]?.duration
     const prefix = subs?.length > 1 ? 's' : ''
 
     if (subs?.length) {
-      const header = `💲Next <b>${toCapitalCase(period_duration)}</b> payment${prefix}:\n`
-      const separator = new Array(MESSAGE_LEN + 2).join('-')
+      const today = format_date(new Date())
+      const header = `💲 <b>${today}</b> next <b>${toCapitalCase(period_duration)}</b> payment${prefix}:\n`
+      const separator = new Array(MESSAGE_LEN).join('-')
 
       const rows = subs?.map(({ payment_date, name, price }) => {
-        const num_of_spaces = MESSAGE_LEN - DATE_LEN - name.length - `${price}`.length
-        const right_padding = new Array(num_of_spaces + 1).join(' ')
+        const date = format_date(new Date(payment_date))
 
-        return `\n👉 <b>${payment_date}</b> ${name}` + right_padding + `${price}$`
+        return `\n👉 <b>${date}</b> ${name}` + `  |  <b>${price}$</b>`
       })
 
       return header + separator + rows.join('')
@@ -62,7 +61,7 @@ class Sender {
     return ''
   }
 
-  get_subs_to_renew_in_x_days({subs, days: renew_in = 1}) {
+  get_subs_to_renew_in_x_days({subs, renew_in = 1}) {
     return subs
       ?.filter(({ fields }) => {
         const { 'Payment date': payment_date } = fields

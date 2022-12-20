@@ -11,8 +11,8 @@ async function handleFetchResponse(req, env) {
 
   if (url.pathname === '/') {
     const {active_subs, past_subs} = await subs_updater.split_subs()
-    // await subs_updater.main({active_subs, past_subs})
     await sender.send_reminder(active_subs, env)
+    await subs_updater.main({active_subs, past_subs})
 
     return new Response('JMSG: Success request to /')
   }
@@ -28,7 +28,7 @@ export default {
   async scheduled(event, env, ctx) {
     log('cron processed at ', new Date())
     const {active_subs, past_subs} = await subs_updater.split_subs()
-    await subs_updater.main({active_subs, past_subs})
     await sender.send_reminder(active_subs, env)
+    await subs_updater.main({active_subs, past_subs})
   }
 }
