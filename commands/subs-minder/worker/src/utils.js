@@ -13,4 +13,21 @@ function toCapitalCase(str) {
   return str[0]?.toUpperCase() + str.slice(1)
 }
 
-export { log, error, logKeys, toCapitalCase }
+// formats dates like: Dec 22
+function format_date(date) {
+  const formatted_date = new Intl.DateTimeFormat('en-US', { dateStyle: 'medium' }).format(date)
+  return formatted_date?.split(',')?.[0]
+}
+
+function fill_with_spaces(count) {
+  return Array.new(count + 1).join(' ')
+}
+
+export { 
+  log,
+  error,
+  logKeys,
+  toCapitalCase,
+  format_date,
+  fill_with_spaces,
+}

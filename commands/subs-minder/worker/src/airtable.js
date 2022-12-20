@@ -137,8 +137,8 @@ class RecordsUpdater extends Airtable {
   }
 
   async split_subs() {
-    const active_subs = await this.get_active_monthly_subs()
     // const active_subs = await this.get_active_monthly_subs_mock()
+    const active_subs = await this.get_active_monthly_subs()
     const past_subs = this.get_past_subs(active_subs)
 
     return {active_subs, past_subs}
