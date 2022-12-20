@@ -1,21 +1,21 @@
 {
   "name": "subs_updater",
-  "description": "CF worker to update subscription dates in Airtable",
+  "description": "CF worker to update subscription dates in Airtable and send reminders to TG",
   "version": "0.1.5",
-  "private": true,
   "type": "module",
   "scripts": {
-    "start": "wrangler dev",
-    "start:c": "wrangler dev --test-scheduled",
-    "start:n": "node src/main.js",
-    "bootstrap:data": "node src/fetch_to_file.js",
-    "deploy": "wrangler publish",
+    "dev": "npx wrangler dev",
+    "dev:scheduled": "npx wrangler dev --test-scheduled",
+    "dev:node": "node src/dev/main.js",
+    "bootstrap:data": "node src/dev/fetch_to_file.js",
+    "log": "npx wrangler tail --format=pretty",
+    "deploy": "npx wrangler publish",
     "test": "jest"
   },
   "devDependencies": {
     "jest": "29.3.1",
     "node-fetch": "2.6.7",
-    "wrangler": "2.4.4"
+    "wrangler": "2.6.2"
   },
   "keywords": [],
   "author": "Eugene Chulkov <genechulkov@gmail.com>",
