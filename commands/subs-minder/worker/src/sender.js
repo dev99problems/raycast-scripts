@@ -43,11 +43,11 @@ class Sender {
   convert_to_message(subs) {
     const MESSAGE_LEN = 42
     const period_duration = subs?.[0]?.duration
-    const prefix = subs?.length > 1 ? 's' : ''
+    const suffix = subs?.length > 1 ? 's' : ''
 
     if (subs?.length) {
       const today = format_date(new Date())
-      const header = `💲 <b>${today}</b> next <b>${toCapitalCase(period_duration)}</b> payment${prefix}:\n`
+      const header = `💲 <b>${today}</b> next <b>${toCapitalCase(period_duration)}</b> payment${suffix}:\n`
       const separator = new Array(MESSAGE_LEN).join('-')
 
       const rows = subs?.map(({ payment_date, name, price }) => {
@@ -95,8 +95,8 @@ class Sender {
   }
 
   async send_reminder(active_subs, env) {
-    const tomorrow_subs = this.get_subs_to_renew_in_x_days({subs: active_subs, renew_in: 1})
-    const message_text = this.convert_to_message(tomorrow_subs)
+    const subs_to_renew_tomorrow = this.get_subs_to_renew_in_x_days({subs: active_subs, renew_in: 1})
+    const message_text = this.convert_to_message(subs_to_renew_tomorrow)
 
     const res = await this.send(message_text, env)
     log(`status = ${res.status}`)
