@@ -1,7 +1,7 @@
 {
   "name": "subs_updater",
   "description": "CF worker to update subscription dates in Airtable and send reminders to TG",
-  "version": "0.1.5",
+  "version": "0.1.6",
   "type": "module",
   "scripts": {
     "dev": "npx wrangler dev",

@@ -34,6 +34,7 @@ https://user-images.githubusercontent.com/6503508/187051414-5b14293a-d74d-4f36-b
 Displays current active `monthly/yearly` subscriptions I have (stored at `Airtable`)
 in a form of a table view with `total` field, info about `paid` subs this month/year,
 `next` closest payment and auto cron updater of payment dates while `subs` remain marked as `renewed`.
+The same `cron` job sends messages one day before the next `monthly` subscription payment.
 
 **Yearly subs**
 ![subsminder_yearly](https://user-images.githubusercontent.com/6503508/205745717-4aa20bc1-7bcf-4ccb-9a87-d2417c5c686f.jpg)
@@ -75,14 +76,6 @@ Trims the meta data from [Great Suspender](https://chrome.google.com/webstore/de
 Works pretty the same as [great-suspender-link-trimmer](https://github.com/dev99problems/great-suspender-link-trimmer)
 
 https://user-images.githubusercontent.com/6503508/137031968-ce1e2837-5a70-4e11-939f-97150e248289.mov
-
-<br/>
-
-### 📈 kuna:doge
-
-Gets the latest **DOGE/UAH** information from [kuna.io](https://kuna.io/markets/dogeuah)
-
-<img src="./images/kuna-doge.png" alt="drawing" width="570" />
 
 <br/>
 
