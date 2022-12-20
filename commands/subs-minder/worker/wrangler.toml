@@ -2,6 +2,10 @@ name = "subs_updater"
 main = "src/worker.js"
 compatibility_date = "2022-11-22"
 
+services = [
+  { binding = "jeremy", service = "<SERVICE_NAME>" }
+]
+
 [triggers]
 crons = ["0 9 * * *"] # 09-00 am every day
 # for testing purposes only
