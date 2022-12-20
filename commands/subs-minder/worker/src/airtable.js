@@ -1,9 +1,7 @@
-// NOTE: Usefull for development
 // import fetch from 'node-fetch'
-import data_mock from './data.json' assert { type: 'json' }
+import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
-
-const log = console.log
+import { log } from './utils.js'
 
 // NOTE: had to write this wrapper myself, because Airtable JS package
 // doesn't work properly in CF Worker runtime
@@ -138,12 +136,19 @@ class RecordsUpdater extends Airtable {
     return `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
   }
 
-  async main() {
+  async split_subs() {
     const active_subs = await this.get_active_monthly_subs()
+    // const active_subs = await this.get_active_monthly_subs_mock()
     const past_subs = this.get_past_subs(active_subs)
 
+    return {active_subs, past_subs}
+  }
+
+  async main({active_subs, past_subs}) {
     log(`Amount of subscriptions to update: ${past_subs?.length}`)
     past_subs?.length && await this.update_valid_until_field(past_subs)
+
+    // Update payment dates on 1-st day of Month
     this.is_first_day_of_month() && await this.update_next_payment_field(active_subs)
   }
 }
