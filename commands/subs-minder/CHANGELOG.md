@@ -1,6 +1,12 @@
----------
-subsminder
----------
+# subsminder
+
+## 0.1.6
+
+### Patch
+
+- be455a0: sender reminder in da house (#31)
+- 9d082ec: deps update file restruct (#30)
+
 
 ## 0.1.5
 
