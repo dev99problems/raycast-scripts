@@ -1,7 +1,8 @@
 // import fetch from 'node-fetch';
 import { error, log, toCapitalCase, format_date } from './utils.js';
+import env from './env.js'
 
-const url = '<YOUR_JEREMY_URL>'
+const url = env.JEREMY_API_URL
 
 class Sender {
   constructor(auth_key) {
