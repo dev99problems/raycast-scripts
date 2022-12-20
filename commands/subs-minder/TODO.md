@@ -1,6 +1,10 @@
---------
-TODO subsminder
---------
+# TODO subsminder
+
+<!--toc:start-->
+- [TODO subsminder](#todo-subsminder)
+  - [TODO](#todo)
+  - [Refactoring](#refactoring)
+<!--toc:end-->
 
 ## TODO
 `[X]` add worker for updating subs `valid_through` dates
@@ -8,7 +12,6 @@ TODO subsminder
 `[ ]` consider: adding for the next payment a field like (`in 2 days` or `in 1.5 months`)
 
 ## Refactoring
-
 **lib**
 `[ ]` shave off the `data` field in `Row` class and rename `Row` -> `Subscription`
 `[ ]` get rid of `require_relative` completely???
