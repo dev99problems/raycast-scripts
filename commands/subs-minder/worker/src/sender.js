@@ -10,28 +10,30 @@ class Sender {
   }
 
   async send(msg, env) {
-    try {
-      // const res = await fetch(url, {
-      const res = await env.jeremy.fetch(url, {
-        method: 'POST',
-        headers: {
-          'X-Custom-JKey': this.auth_key,
-          'content-type': 'application/json'
-        },
-        body: JSON.stringify({
-          message: {
-            text: msg
-          }
-        }),
-      })
+    if (msg?.length) {
+      try {
+        // const res = await fetch(url, {
+        const res = await env.jeremy.fetch(url, {
+          method: 'POST',
+          headers: {
+            'X-Custom-JKey': this.auth_key,
+            'content-type': 'application/json'
+          },
+          body: JSON.stringify({
+            message: {
+              text: msg
+            }
+          }),
+        })
 
-      // log(`url: ${res.url}`)
-      // log(`statusText: ${res.statusText}`)
-      // log(`status: ${res?.status}`)
-      return res
-    } catch (err) {
-      error(`JError: Sender.send_message failed to send request: ${err?.message}`)
-      log(err)
+        // log(`url: ${res.url}`)
+        // log(`statusText: ${res.statusText}`)
+        // log(`status: ${res?.status}`)
+        return res
+      } catch (err) {
+        error(`JError: Sender.send_message failed to send request: ${err?.message}`)
+        log(err)
+      }
     }
   }
 
@@ -62,7 +64,7 @@ class Sender {
     return ''
   }
 
-  get_subs_to_renew_in_x_days({subs, renew_in = 1}) {
+  get_subs_to_renew_in_x_days({ subs, renew_in = 1 }) {
     return subs
       ?.filter(({ fields }) => {
         const { 'Payment date': payment_date } = fields
@@ -95,11 +97,11 @@ class Sender {
   }
 
   async send_reminder(active_subs, env) {
-    const subs_to_renew_tomorrow = this.get_subs_to_renew_in_x_days({subs: active_subs, renew_in: 1})
+    const subs_to_renew_tomorrow = this.get_subs_to_renew_in_x_days({ subs: active_subs, renew_in: 1 })
     const message_text = this.convert_to_message(subs_to_renew_tomorrow)
 
     const res = await this.send(message_text, env)
-    log(`status = ${res.status}`)
+    log(`status = ${res?.status}`)
     return res
   }
 }
