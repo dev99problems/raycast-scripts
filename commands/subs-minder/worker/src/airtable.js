@@ -1,7 +1,7 @@
 // import fetch from 'node-fetch'
 import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
-import { log } from './utils.js'
+import { log, error } from './utils.js'
 
 // NOTE: had to write this wrapper myself, because Airtable JS package
 // doesn't work properly in CF Worker runtime
@@ -17,16 +17,21 @@ class Airtable {
   }
 
   async get_records() {
-    const res = await fetch(this.url.href, {
-      headers: {
-        Authorization: `Bearer ${this.key}`,
-        'Content-type': `application/json`
-      }
-    })
-    const json = await res.json()
-    const records = json.records
+    try {
+      const res = await fetch(this.url.href, {
+        headers: {
+          Authorization: `Bearer ${this.key}`,
+          'Content-type': `application/json`
+        }
+      })
+      const json = await res.json()
+      const records = json.records
 
-    return records
+      return records
+    } catch (err) {
+      error(`JError: Records request failed: ${err}`)
+      return []
+    }
   }
 
   async update_records(body) {
@@ -42,22 +47,8 @@ class Airtable {
 }
 
 class RecordsUpdater extends Airtable {
-  select_active_monthly_subs(subs) {
-    return subs?.filter(({ fields: sub }) => sub['Active'] && sub['Duration'] === 'monthly')
-  }
-
-  async get_active_monthly_subs() {
-    try {
-      const subs = await this.get_records()
-      const active_subs = this.select_active_monthly_subs(subs)
-      return active_subs
-    } catch (err) {
-      console.error(`Records request failed: ${err}`)
-    }
-  }
-
-  async get_active_monthly_subs_mock() {
-    return this.select_active_monthly_subs(data_mock)
+  select_active_subs_by_duration(subs, duration) {
+    return subs?.filter(({ fields: sub }) => sub['Active'] && sub['Duration'] === duration)
   }
 
   get_past_subs(subs) {
@@ -90,7 +81,7 @@ class RecordsUpdater extends Airtable {
       })
       return res
     } catch (err) {
-      console.error(`Records update failed: ${err}`)
+      error(`Records update failed: ${err}`)
     }
   }
 
@@ -112,7 +103,7 @@ class RecordsUpdater extends Airtable {
       })
       return res
     } catch (err) {
-      console.error(`Records update failed: ${err}`)
+      error(`Records update failed: ${err}`)
     }
   }
 
@@ -136,12 +127,12 @@ class RecordsUpdater extends Airtable {
     return `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
   }
 
-  async split_subs() {
-    // const active_subs = await this.get_active_monthly_subs_mock()
-    const active_subs = await this.get_active_monthly_subs()
+  async split_subs(subs, duration) {
+    // const active_subs = this.select_active_subs_by_duration(data_mock, duration)
+    const active_subs = this.select_active_subs_by_duration(subs, duration)
     const past_subs = this.get_past_subs(active_subs)
 
-    return {active_subs, past_subs}
+    return { active_subs, past_subs }
   }
 
   async main({active_subs, past_subs}) {
