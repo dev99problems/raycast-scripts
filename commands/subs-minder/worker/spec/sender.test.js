@@ -17,6 +17,17 @@ describe('Sender', () => {
       expect(renew_tomorrow[0].name).toBe('Spotify')
     })
 
+    it('should ignore passed HH:MM:SS in "today_date" while calculating next renewals', () => {
+      const renew_in_10_days = sender.get_subs_to_renew_in_x_days({
+        subs: active_monthly_subs,
+        days_to_renewal: 10,
+        today_date: new Date('2022-12-05 22:43:11'),
+      })
+
+      expect(renew_in_10_days.length).toBe(1)
+      expect(renew_in_10_days[0].name).toBe('Spotify')
+    })
+
     it('should order subs desc. by "price" if there are more than 1', () => {
       const updated_subs = produce(active_monthly_subs, draft => {
         draft[2].fields['Payment date'] = '2022-12-10'
@@ -62,14 +73,14 @@ describe('Sender', () => {
     })
 
     it('should return [] when there are no renewals in X days', () => {
-      const renew_tomorrow = sender.get_subs_to_renew_in_x_days({
+      const renew_in_2_days = sender.get_subs_to_renew_in_x_days({
         subs: active_monthly_subs,
-        days_to_renewal: 1,
+        days_to_renewal: 2,
         today_date: new Date('2022-12-01'),
       })
 
-      expect(renew_tomorrow.length).toBe(0)
-      expect(renew_tomorrow).toEqual([])
+      expect(renew_in_2_days.length).toBe(0)
+      expect(renew_in_2_days).toEqual([])
     })
   })
 

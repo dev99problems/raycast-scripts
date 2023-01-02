@@ -1,5 +1,5 @@
-// import fetch from 'node-fetch';
-import { error, log, toCapitalCase, format_date } from './utils.js';
+import fetch from 'node-fetch';
+import { error, log, toCapitalCase, format_date, resetHMS } from './utils.js';
 import env from './env.js'
 
 const url = env.JEREMY_API_URL
@@ -12,8 +12,8 @@ class Sender {
   async send(msg, env) {
     if (msg?.length) {
       try {
-        // const res = await fetch(url, {
-        const res = await env.jeremy.fetch(url, {
+        const jeremy_fetch = env ? env.jeremy.fetch : fetch
+        const res = await jeremy_fetch(url, {
           method: 'POST',
           headers: {
             'X-Custom-JKey': this.auth_key,
@@ -31,8 +31,7 @@ class Sender {
         // log(`status: ${res?.status}`)
         return res
       } catch (err) {
-        error(`JError: Sender.send_message failed to send request: ${err?.message}`)
-        log(err)
+        error(`JError: Sender.send_message failed to send request: ${err.message}, ${err.stack}`)
       }
     }
   }
@@ -70,9 +69,9 @@ class Sender {
         const { 'Payment date': payment_date } = fields
         const day_in_ms = 86400000 // 24*60*60*1000
 
-        const diff = +((new Date(payment_date) - today_date) / day_in_ms).toFixed(2)
+        const diff = (new Date(payment_date) - resetHMS(today_date)) / day_in_ms
         const renewal_in_x_days = days_to_renewal - 1 < diff && diff <= days_to_renewal
-        return renewal_in_x_days 
+        return renewal_in_x_days
       })
       // normalize fields
       ?.map(({ fields }) => ({
