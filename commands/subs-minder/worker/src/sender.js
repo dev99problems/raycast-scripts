@@ -64,16 +64,15 @@ class Sender {
     return ''
   }
 
-  get_subs_to_renew_in_x_days({ subs, renew_in = 1 }) {
+  get_subs_to_renew_in_x_days({ subs, days_to_renewal = 1, today_date = new Date() }) {
     return subs
       ?.filter(({ fields }) => {
         const { 'Payment date': payment_date } = fields
-        const today = new Date();
         const day_in_ms = 86400000 // 24*60*60*1000
 
-        const diff = new Date(payment_date) - today
-        const is_before_x_days = 0 < diff && diff <= (day_in_ms * renew_in)
-        return is_before_x_days
+        const diff = +((new Date(payment_date) - today_date) / day_in_ms).toFixed(2)
+        const renewal_in_x_days = days_to_renewal - 1 < diff && diff <= days_to_renewal
+        return renewal_in_x_days 
       })
       // normalize fields
       ?.map(({ fields }) => ({
@@ -82,18 +81,7 @@ class Sender {
         payment_date: fields['Payment date'],
         price: fields.Price
       }))
-      // sorted asc by payment_date
-      ?.sort((a, b) => {
-        const date_a = new Date(a.payment_date)
-        const date_b = new Date(b.payment_date)
-        if (date_a > date_b) {
-          return 1
-        } else if (date_a === date_b) {
-          return 0
-        } else {
-          return -1
-        }
-      })
+      ?.sort((a, b) => b.price - a.price)
   }
 
   async send_reminder(active_subs, env) {

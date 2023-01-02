@@ -6,11 +6,11 @@
   "scripts": {
     "dev": "npx wrangler dev",
     "dev:scheduled": "npx wrangler dev --test-scheduled",
-    "dev:node": "node src/dev/main.js",
+    "dev:node": "node src/dev/dev.js",
     "bootstrap:data": "node src/dev/fetch_to_file.js",
     "log": "npx wrangler tail --format=pretty",
     "deploy": "npx wrangler publish",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
   },
   "devDependencies": {
     "immer": "9.0.16",
