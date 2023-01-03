@@ -1,4 +1,4 @@
-// import fetch from 'node-fetch'
+import fetch from 'node-fetch'
 import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
 import { log, error } from './utils.js'
@@ -29,7 +29,7 @@ class Airtable {
 
       return records
     } catch (err) {
-      error(`JError: Records request failed: ${err}`)
+      error(`JError: Airtable.get_records Records request failed: ${err.message}, ${err.stack}`)
       return []
     }
   }
@@ -111,6 +111,8 @@ class RecordsUpdater extends Airtable {
     return new Date().getDate() === 1
   }
 
+  // NOTE: this doesn't seem to work correct for updating dates,
+  // on year change, like 2022-12-10 -> 2023-01-10 | last time it did 2022-02-10 instead
   calc_next_payment_date(curr_payment_date) {
     const d = new Date(curr_payment_date)
     const date = d.getDate()
@@ -135,8 +137,8 @@ class RecordsUpdater extends Airtable {
     return { active_subs, past_subs }
   }
 
-  async main({active_subs, past_subs}) {
-    log(`Amount of subscriptions to update: ${past_subs?.length}`)
+  async update_airtable_records({ active_subs, past_subs, duration }) {
+    log(`Amount of ${duration} subscriptions to update: ${past_subs?.length}`)
     past_subs?.length && await this.update_valid_until_field(past_subs)
 
     // Update payment dates on 1-st day of Month
