@@ -7,7 +7,7 @@ function logKeys(obj = {}) {
 
 function toCapitalCase(str) {
   if (typeof str !== 'string') {
-    throw new Error('JError: passed param to toCapitalCase should be a string')
+    throw new Error('JError: toCapitalCase passed param to toCapitalCase should be a string')
   }
 
   return str[0]?.toUpperCase() + str.slice(1)
@@ -23,6 +23,15 @@ function fill_with_spaces(count) {
   return Array.new(count + 1).join(' ')
 }
 
+
+function resetHMS (date) {
+  date?.setHours('0')
+  date?.setMinutes('0')
+  date?.setSeconds('0')
+
+  return date
+}
+
 export { 
   log,
   error,
@@ -30,4 +39,5 @@ export {
   toCapitalCase,
   format_date,
   fill_with_spaces,
+  resetHMS,
 }
