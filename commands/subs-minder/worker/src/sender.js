@@ -1,5 +1,5 @@
-// import fetch from 'node-fetch';
-import { error, log, toCapitalCase, format_date } from './utils.js';
+import fetch from 'node-fetch';
+import { error, log, toCapitalCase, format_date, resetHMS } from './utils.js';
 import env from './env.js'
 
 const url = env.JEREMY_API_URL
@@ -9,11 +9,11 @@ class Sender {
     this.auth_key = auth_key
   }
 
-  async send(msg, env) {
+  async send_to_jeremy(msg, env) {
     if (msg?.length) {
       try {
-        // const res = await fetch(url, {
-        const res = await env.jeremy.fetch(url, {
+        const jeremy_fetch = env ? env.jeremy.fetch : fetch
+        const res = await jeremy_fetch(url, {
           method: 'POST',
           headers: {
             'X-Custom-JKey': this.auth_key,
@@ -31,8 +31,7 @@ class Sender {
         // log(`status: ${res?.status}`)
         return res
       } catch (err) {
-        error(`JError: Sender.send_message failed to send request: ${err?.message}`)
-        log(err)
+        error(`JError: Sender.send_message failed to send request: ${err.message}, ${err.stack}`)
       }
     }
   }
@@ -64,16 +63,15 @@ class Sender {
     return ''
   }
 
-  get_subs_to_renew_in_x_days({ subs, renew_in = 1 }) {
+  get_subs_to_renew_in_x_days({ subs, days_to_renewal = 1, today_date = new Date() }) {
     return subs
       ?.filter(({ fields }) => {
         const { 'Payment date': payment_date } = fields
-        const today = new Date();
         const day_in_ms = 86400000 // 24*60*60*1000
 
-        const diff = new Date(payment_date) - today
-        const is_before_x_days = 0 < diff && diff <= (day_in_ms * renew_in)
-        return is_before_x_days
+        const diff = (new Date(payment_date) - resetHMS(today_date)) / day_in_ms
+        const renewal_in_x_days = diff === days_to_renewal
+        return renewal_in_x_days
       })
       // normalize fields
       ?.map(({ fields }) => ({
@@ -82,27 +80,38 @@ class Sender {
         payment_date: fields['Payment date'],
         price: fields.Price
       }))
-      // sorted asc by payment_date
-      ?.sort((a, b) => {
-        const date_a = new Date(a.payment_date)
-        const date_b = new Date(b.payment_date)
-        if (date_a > date_b) {
-          return 1
-        } else if (date_a === date_b) {
-          return 0
-        } else {
-          return -1
-        }
-      })
+      ?.sort((a, b) => b.price - a.price)
   }
 
-  async send_reminder(active_subs, env) {
-    const subs_to_renew_tomorrow = this.get_subs_to_renew_in_x_days({ subs: active_subs, renew_in: 1 })
-    const message_text = this.convert_to_message(subs_to_renew_tomorrow)
+  async send_reminder({ active_subs, env, duration, days_to_renewal }) {
+    const subs_to_renew = this.get_subs_to_renew_in_x_days({ subs: active_subs, days_to_renewal })
+    const message_text = this.convert_to_message(subs_to_renew)
 
-    const res = await this.send(message_text, env)
-    log(`status = ${res?.status}`)
-    return res
+    if (message_text) {
+      const res = await this.send_to_jeremy(message_text, env)
+      log(`JLog: ${duration} reminders sent to Jeremy with status = ${res?.status}`)
+      return res
+    }
+  }
+
+  async send_monthly_subs_reminders(active_subs, env) {
+    await this.send_reminder({
+      active_subs,
+      env,
+      duration: 'monthly',
+      days_to_renewal: 1
+    })
+  }
+
+  async send_yearly_subs_reminders(yearly_active_subs, env) {
+    for (let days_to_renewal of [7, 3, 1]) {
+      await this.send_reminder({
+        active_subs: yearly_active_subs,
+        env,
+        duration: 'yearly',
+        days_to_renewal
+      })
+    }
   }
 }
 
