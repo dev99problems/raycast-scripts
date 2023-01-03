@@ -70,7 +70,7 @@ class Sender {
         const day_in_ms = 86400000 // 24*60*60*1000
 
         const diff = (new Date(payment_date) - resetHMS(today_date)) / day_in_ms
-        const renewal_in_x_days = days_to_renewal - 1 < diff && diff <= days_to_renewal
+        const renewal_in_x_days = diff === days_to_renewal
         return renewal_in_x_days
       })
       // normalize fields

@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "npx wrangler dev",
     "dev:scheduled": "npx wrangler dev --test-scheduled",
-    "dev:node": "node src/dev/dev.js",
+    "dev:node": "node src/dev/main.js",
     "bootstrap:data": "node src/dev/fetch_to_file.js",
     "log": "npx wrangler tail --format=pretty",
     "deploy": "npx wrangler publish",
