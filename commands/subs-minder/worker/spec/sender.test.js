@@ -83,8 +83,4 @@ describe('Sender', () => {
       expect(renew_in_2_days).toEqual([])
     })
   })
-
-  describe.skip('convert_to_message', () => {
-
-  })
 })
