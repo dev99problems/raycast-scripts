@@ -1,4 +1,3 @@
-import produce from 'immer'
 import airtable from '../src/airtable.js'
 import { subs_mock, active_monthly_subs, active_yearly_subs } from './__mocks__/subs.mock.js'
 
@@ -52,6 +51,31 @@ describe('RecordsUpdater', () => {
 
       expect(past_subs).toEqual([])
       expect(past_subs.length).toBe(0)
+    })
+  })
+
+  // NOTE: Now it doesn't accept any "duration" to determine monthly from yearly
+  describe('calc_next_payment_date', () => {
+    const m = {
+      'Nov': 9,
+      'Dec': 11,
+      'Jan': 0
+    }
+
+    it('should correctly switch to next monthly date in regular cases', () => {
+      expect(rec_updater.calc_next_payment_date('2022-10-01', m.Nov)).toBe('2022-11-1')
+    })
+
+    it('should correctly switch through new year', () => {
+      expect(rec_updater.calc_next_payment_date('2022-12-03', m.Dec)).toBe('2023-1-3')
+    })
+
+    it('should correctly select proper last day of the month', () => {
+      expect(rec_updater.calc_next_payment_date('2023-01-31', m.Jan)).toBe('2023-2-28')
+    })
+
+    it('should correctly select proper last day of the month during leap year', () => {
+      expect(rec_updater.calc_next_payment_date('2020-01-31', m.Jan)).toBe('2020-2-29')
     })
   })
 })

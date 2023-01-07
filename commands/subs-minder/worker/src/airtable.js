@@ -114,12 +114,11 @@ class RecordsUpdater extends Airtable {
 
   // NOTE: this doesn't seem to work correct for updating dates,
   // on year change, like 2022-12-10 -> 2023-01-10 | last time it did 2022-02-10 instead
-  calc_next_payment_date(curr_payment_date) {
+  calc_next_payment_date(curr_payment_date, current_month = new Date().getMonth()) {
     const d = new Date(curr_payment_date)
     const date = d.getDate()
     const year = d.getFullYear()
 
-    const current_month = new Date().getMonth()
     const next_payment_month = current_month + 1 <= 11 ? current_month + 1 : 0
     const next_payment_year = next_payment_month === 0 ? year + 1 : year
     const last_date_of_next_month = new Date(next_payment_year, next_payment_month + 1, 0).getDate()
