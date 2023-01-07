@@ -51,10 +51,11 @@ class RecordsUpdater extends Airtable {
     return subs?.filter(({ fields: sub }) => sub['Active'] && sub['Duration'] === duration)
   }
 
-  get_past_subs(subs) {
-    return subs?.filter(sub => {
-      const date = sub.fields['Payment date']
-      return new Date(date) < new Date()
+  get_past_subs(active_subs, today_date = new Date()) {
+    return active_subs?.filter(({ fields: sub}) => {
+      const payment_date = sub['Payment date']
+
+      return new Date(payment_date) < today_date
     })
   }
 
@@ -113,12 +114,11 @@ class RecordsUpdater extends Airtable {
 
   // NOTE: this doesn't seem to work correct for updating dates,
   // on year change, like 2022-12-10 -> 2023-01-10 | last time it did 2022-02-10 instead
-  calc_next_payment_date(curr_payment_date) {
+  calc_next_payment_date(curr_payment_date, current_month = new Date().getMonth()) {
     const d = new Date(curr_payment_date)
     const date = d.getDate()
     const year = d.getFullYear()
 
-    const current_month = new Date().getMonth()
     const next_payment_month = current_month + 1 <= 11 ? current_month + 1 : 0
     const next_payment_year = next_payment_month === 0 ? year + 1 : year
     const last_date_of_next_month = new Date(next_payment_year, next_payment_month + 1, 0).getDate()
@@ -129,10 +129,10 @@ class RecordsUpdater extends Airtable {
     return `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
   }
 
-  async split_subs(subs, duration) {
+  split_subs(subs, duration, today_date = new Date()) {
     // const active_subs = this.select_active_subs_by_duration(data_mock, duration)
     const active_subs = this.select_active_subs_by_duration(subs, duration)
-    const past_subs = this.get_past_subs(active_subs)
+    const past_subs = this.get_past_subs(active_subs, today_date)
 
     return { active_subs, past_subs }
   }

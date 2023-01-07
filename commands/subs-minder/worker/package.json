@@ -10,7 +10,8 @@
     "bootstrap:data": "node src/dev/fetch_to_file.js",
     "log": "npx wrangler tail --format=pretty",
     "deploy": "npx wrangler publish",
-    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest"
+    "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
+    "test:current": "npm test --testPathPattern airtable"
   },
   "devDependencies": {
     "immer": "9.0.16",

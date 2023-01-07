@@ -8,7 +8,7 @@ const sender = new Sender(TG_AUTH_KEY)
 const process_monthly_subs = async (subs, env) => {
   const duration = 'monthly'
 
-  const { active_subs, past_subs, } = await subs_updater.split_subs(subs, duration)
+  const { active_subs, past_subs, } = subs_updater.split_subs(subs, duration)
   await sender.send_monthly_subs_reminders(active_subs, env)
   await subs_updater.update_airtable_records({ active_subs, past_subs, duration })
 }
@@ -16,7 +16,7 @@ const process_monthly_subs = async (subs, env) => {
 const process_yearly_subs = async (subs, env) => {
   const duration = 'yearly'
 
-  const { active_subs, past_subs, } = await subs_updater.split_subs(subs, duration)
+  const { active_subs, past_subs, } = subs_updater.split_subs(subs, duration)
   await sender.send_yearly_subs_reminders(active_subs, env)
   await subs_updater.update_airtable_records({ active_subs, past_subs, duration })
 }
