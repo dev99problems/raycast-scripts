@@ -1,5 +1,3 @@
-const config = {
+module.exports = {
   transform: {}
 }
-
-module.exports = config
