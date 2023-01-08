@@ -1,13 +1,13 @@
 const log = console.log
 const error = console.error
 
-function logKeys(obj = {}) {
+function log_keys(obj = {}) {
   Object.keys(obj).forEach(key => log(key)) 
 }
 
-function toCapitalCase(str) {
+function to_capital_case(str) {
   if (typeof str !== 'string') {
-    throw new Error('JError: toCapitalCase passed param to toCapitalCase should be a string')
+    throw new Error('JError: to_capital_case passed param to should be a string')
   }
 
   return str[0]?.toUpperCase() + str.slice(1)
@@ -24,7 +24,7 @@ function fill_with_spaces(count) {
 }
 
 
-function resetHMS (date) {
+function reset_HMS (date) {
   date?.setHours('0')
   date?.setMinutes('0')
   date?.setSeconds('0')
@@ -35,9 +35,9 @@ function resetHMS (date) {
 export { 
   log,
   error,
-  logKeys,
-  toCapitalCase,
+  log_keys,
+  to_capital_case,
   format_date,
   fill_with_spaces,
-  resetHMS,
+  reset_HMS,
 }

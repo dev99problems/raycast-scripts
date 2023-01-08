@@ -1,5 +1,5 @@
 import node_fetch from 'node-fetch';
-import { error, log, toCapitalCase, format_date, resetHMS } from './utils.js';
+import { error, log, to_capital_case, format_date, reset_HMS } from './utils.js';
 import env from './env.js'
 
 const url = env.JEREMY_API_URL
@@ -54,7 +54,7 @@ class Sender {
 
     if (subs?.length) {
       const today = format_date(new Date())
-      const header = `💲 <b>${today}</b> next <b>${toCapitalCase(period_duration)}</b> payment${suffix}:\n`
+      const header = `💲 <b>${today}</b> next <b>${to_capital_case(period_duration)}</b> payment${suffix}:\n`
       const separator = new Array(MESSAGE_LEN).join('-')
 
       const rows = subs?.map(({ payment_date, name, price }) => {
@@ -75,7 +75,7 @@ class Sender {
         const { 'Payment date': payment_date } = fields
         const day_in_ms = 86400000 // 24*60*60*1000
 
-        const diff = (new Date(payment_date) - resetHMS(today_date)) / day_in_ms
+        const diff = (new Date(payment_date) - reset_HMS(today_date)) / day_in_ms
         const renewal_in_x_days = Math.round(diff) === days_to_renewal
         return renewal_in_x_days
       })
