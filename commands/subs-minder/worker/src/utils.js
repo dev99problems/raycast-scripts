@@ -31,7 +31,7 @@ function reset_HMS(date) {
   return date
 }
 
-function format_date_with_extra_zeroes(datestr) {
+function format_as_ISO(datestr) {
   const [year, month, date] = datestr?.split('-') || []
   if (!year || !month || !date) {
     return ''
@@ -51,5 +51,5 @@ export {
   format_date,
   fill_with_spaces,
   reset_HMS,
-  format_date_with_extra_zeroes,
+  format_as_ISO,
 }

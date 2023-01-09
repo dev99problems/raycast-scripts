@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
-import data_mock from './dev/data.json' assert { type: 'json' }
+// import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
-import { log, error, format_date_with_extra_zeroes } from './utils.js'
+import { log, error, format_as_ISO } from './utils.js'
 
 // NOTE: had to write this wrapper myself, because Airtable JS package
 // doesn't work properly in CF Worker runtime
@@ -126,7 +126,7 @@ class RecordsUpdater extends Airtable {
     // because of the nature of months in JS and other langs is usually 0..11
     const new_date = `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
 
-    return format_date_with_extra_zeroes(new_date)
+    return format_as_ISO(new_date)
   }
 
   _calc_next_yearly_date(payment_date, current_year = new Date().getFullYear()) {
@@ -140,7 +140,7 @@ class RecordsUpdater extends Airtable {
 
     const new_date = `${next_payment_year}-${month + 1}-${next_payment_date}`
 
-    return format_date_with_extra_zeroes(new_date) //e.g. 2022-12-28
+    return format_as_ISO(new_date) //e.g. 2022-12-28
   }
 
   calc_next_payment_date(payment_date, duration, current_date = {}) {
