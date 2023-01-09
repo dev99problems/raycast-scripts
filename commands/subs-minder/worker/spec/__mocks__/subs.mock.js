@@ -7,7 +7,7 @@ const active_monthly_subs = [
       Active: true,
       Price: 2,
       Duration: 'monthly',
-      'Valid until': '2023-1-10',
+      'Valid until': '2023-01-10',
       Type: [
         'Content',
         'Services'
@@ -41,13 +41,13 @@ const active_monthly_subs = [
       Active: true,
       Price: 15,
       Duration: 'monthly',
-      'Valid until': '2022-01-5',
+      'Valid until': '2023-01-05',
       Type: [
         'Content',
         'Services'
       ],
       Renew: true,
-      'Payment date': '2022-12-5'
+      'Payment date': '2022-12-05'
     }
   },
 ]
@@ -78,11 +78,11 @@ const active_yearly_subs = [
       Active: true,
       Price: 25,
       Duration: 'yearly',
-      'Valid until': '2022-12-03',
+      'Valid until': '2022-12-19',
       Type: [
         'Services'
       ],
-      'Payment date': '2022-12-03'
+      'Payment date': '2022-12-19'
     }
   },
   {
@@ -93,11 +93,11 @@ const active_yearly_subs = [
       Active: true,
       Price: 44,
       Duration: 'yearly',
-      'Valid until': '2023-01-27',
+      'Valid until': '2022-12-09',
       Type: [
         'Services'
       ],
-      'Payment date': '2022-11-30'
+      'Payment date': '2022-12-09'
     }
   },
 ]

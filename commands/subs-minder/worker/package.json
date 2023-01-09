@@ -1,7 +1,7 @@
 {
   "name": "subs_updater",
   "description": "CF worker to update subscription dates in Airtable and send reminders to TG",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "type": "module",
   "scripts": {
     "dev": "npx wrangler dev",
@@ -11,13 +11,16 @@
     "log": "npx wrangler tail --format=pretty",
     "deploy": "npx wrangler publish",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
-    "test:current": "npm test --testPathPattern airtable"
+    "test:current": "npm test --testPathPattern airtable",
+    "lint": "npx eslint --max-warnings 2 src/"
   },
   "devDependencies": {
+    "eslint": "8.31.0",
+    "eslint-plugin-import": "2.26.0",
     "immer": "9.0.16",
     "jest": "29.3.1",
     "node-fetch": "2.6.7",
-    "wrangler": "2.6.2"
+    "wrangler": "2.7.0"
   },
   "keywords": [],
   "author": "Eugene Chulkov <genechulkov@gmail.com>",

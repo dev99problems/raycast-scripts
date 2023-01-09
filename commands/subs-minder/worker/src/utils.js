@@ -1,13 +1,13 @@
 const log = console.log
 const error = console.error
 
-function logKeys(obj = {}) {
-  Object.keys(obj).forEach(key => log(key)) 
+function log_keys(obj = {}) {
+  Object.keys(obj).forEach(key => log(key))
 }
 
-function toCapitalCase(str) {
+function to_capital_case(str) {
   if (typeof str !== 'string') {
-    throw new Error('JError: toCapitalCase passed param to toCapitalCase should be a string')
+    throw new Error('JError: to_capital_case passed param to should be a string')
   }
 
   return str[0]?.toUpperCase() + str.slice(1)
@@ -23,8 +23,7 @@ function fill_with_spaces(count) {
   return Array.new(count + 1).join(' ')
 }
 
-
-function resetHMS (date) {
+function reset_HMS(date) {
   date?.setHours('0')
   date?.setMinutes('0')
   date?.setSeconds('0')
@@ -32,12 +31,25 @@ function resetHMS (date) {
   return date
 }
 
-export { 
+function format_as_ISO(datestr) {
+  const [year, month, date] = datestr?.split('-') || []
+  if (!year || !month || !date) {
+    return ''
+  }
+
+  const updated_month = month < 10 ? `0${month}` : month
+  const update_date = date < 10 ? `0${date}` : date
+
+  return `${year}-${updated_month}-${update_date}`
+}
+
+export {
   log,
   error,
-  logKeys,
-  toCapitalCase,
+  log_keys,
+  to_capital_case,
   format_date,
   fill_with_spaces,
-  resetHMS,
+  reset_HMS,
+  format_as_ISO,
 }

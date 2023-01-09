@@ -10,7 +10,7 @@ const process_monthly_subs = async (subs, env) => {
 
   const { active_subs, past_subs, } = subs_updater.split_subs(subs, duration)
   await sender.send_monthly_subs_reminders(active_subs, env)
-  await subs_updater.update_airtable_records({ active_subs, past_subs, duration })
+  await subs_updater.update_monthly_records(active_subs, past_subs)
 }
 
 const process_yearly_subs = async (subs, env) => {
@@ -18,7 +18,7 @@ const process_yearly_subs = async (subs, env) => {
 
   const { active_subs, past_subs, } = subs_updater.split_subs(subs, duration)
   await sender.send_yearly_subs_reminders(active_subs, env)
-  await subs_updater.update_airtable_records({ active_subs, past_subs, duration })
+  await subs_updater.update_yearly_records(past_subs)
 }
 
 const main_flow = async (env) => {
@@ -28,6 +28,7 @@ const main_flow = async (env) => {
   await process_yearly_subs(subs, env)
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export {
   process_monthly_subs,
   process_yearly_subs,

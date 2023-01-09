@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
-import data_mock from './dev/data.json' assert { type: 'json' }
+// import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
-import { log, error } from './utils.js'
+import { log, error, format_as_ISO } from './utils.js'
 
 // NOTE: had to write this wrapper myself, because Airtable JS package
 // doesn't work properly in CF Worker runtime
@@ -52,19 +52,19 @@ class RecordsUpdater extends Airtable {
   }
 
   get_past_subs(active_subs, today_date = new Date()) {
-    return active_subs?.filter(({ fields: sub}) => {
+    return active_subs?.filter(({ fields: sub }) => {
       const payment_date = sub['Payment date']
 
       return new Date(payment_date) < today_date
     })
   }
 
-  async update_valid_until_field(subs = []) {
+  async update_valid_until_field(past_subs = [], duration, current_date) {
     const subs_updates = []
-    subs.forEach(sub => {
+    past_subs.forEach(sub => {
       const should_be_renewed = sub.fields['Renew']
       const payment_date = sub.fields['Payment date']
-      const new_date = this.calc_next_payment_date(payment_date)
+      const new_date = this.calc_next_payment_date(payment_date, duration, current_date)
 
       if (should_be_renewed) {
         subs_updates.push({
@@ -77,7 +77,7 @@ class RecordsUpdater extends Airtable {
     })
 
     try {
-      const res = await this.update_records({
+      const res = subs_updates.length && await this.update_records({
         records: subs_updates
       })
       return res
@@ -86,15 +86,19 @@ class RecordsUpdater extends Airtable {
     }
   }
 
-  async update_next_payment_field(subs = []) {
-    const subs_updates = subs.map(sub => {
-      const date = sub.fields['Payment date']
-      const new_date = this.calc_next_payment_date(date)
-      return {
-        id: sub.id,
-        fields: {
-          'Payment date': new_date
-        }
+  async update_next_payment_field(subs = [], duration, current_date) {
+    const subs_updates = []
+    subs.forEach(sub => {
+      const should_be_renewed = sub.fields['Renew']
+      const payment_date = sub.fields['Payment date']
+      const new_date = this.calc_next_payment_date(payment_date, duration, current_date)
+      if (should_be_renewed) {
+        subs_updates.push({
+          id: sub.id,
+          fields: {
+            'Payment date': new_date
+          }
+        })
       }
     })
 
@@ -112,10 +116,8 @@ class RecordsUpdater extends Airtable {
     return new Date().getDate() === 1
   }
 
-  // NOTE: this doesn't seem to work correct for updating dates,
-  // on year change, like 2022-12-10 -> 2023-01-10 | last time it did 2022-02-10 instead
-  calc_next_payment_date(curr_payment_date, current_month = new Date().getMonth()) {
-    const d = new Date(curr_payment_date)
+  _calc_next_monthly_date(payment_date, current_month = new Date().getMonth()) {
+    const d = new Date(payment_date)
     const date = d.getDate()
     const year = d.getFullYear()
 
@@ -126,7 +128,32 @@ class RecordsUpdater extends Airtable {
 
     // in human readable form the JS month should be +1,
     // because of the nature of months in JS and other langs is usually 0..11
-    return `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
+    const new_date = `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}`
+
+    return format_as_ISO(new_date) //e.g. 2022-12-28
+  }
+
+  _calc_next_yearly_date(payment_date, current_year = new Date().getFullYear()) {
+    const d = new Date(payment_date)
+    const date = d.getDate()
+    const month = d.getMonth()
+
+    const next_payment_year = current_year + 1
+    const next_year_last_date_of_month = new Date(next_payment_year, month + 1, 0).getDate()
+    const next_payment_date = Math.min(next_year_last_date_of_month, date)
+
+    const new_date = `${next_payment_year}-${month + 1}-${next_payment_date}`
+
+    return format_as_ISO(new_date)
+  }
+
+  calc_next_payment_date(payment_date, duration, current_date = {}) {
+    const { month, year } = current_date
+    if (duration === 'monthly') {
+      return this._calc_next_monthly_date(payment_date, month)
+    } else if (duration === 'yearly') {
+      return this._calc_next_yearly_date(payment_date, year)
+    }
   }
 
   split_subs(subs, duration, today_date = new Date()) {
@@ -137,15 +164,34 @@ class RecordsUpdater extends Airtable {
     return { active_subs, past_subs }
   }
 
-  async update_airtable_records({ active_subs, past_subs, duration }) {
-    log(`Amount of ${duration} subscriptions to update: ${past_subs?.length}`)
-    past_subs?.length && await this.update_valid_until_field(past_subs)
+  async update_monthly_records(active_subs, past_subs) {
+    const duration = 'monthly'
+    if (past_subs?.length) {
+      log(`Amount of ${duration} subs to consider update: ${past_subs?.length}`)
+
+      await this.update_valid_until_field(past_subs, duration)
+    } else {
+      log(`No ${duration} subs need "valid_unitl" update`)
+    }
 
     // Update payment dates on 1-st day of Month
-    this.is_first_day_of_month() && await this.update_next_payment_field(active_subs)
+    this.is_first_day_of_month() && await this.update_next_payment_field(active_subs, duration)
+  }
+
+  async update_yearly_records(past_subs) {
+    const duration = 'yearly'
+    if (past_subs?.length) {
+      log(`Amount of ${duration} subs to consider update: ${past_subs?.length}`)
+
+      await this.update_valid_until_field(past_subs, duration)
+      await this.update_next_payment_field(past_subs, duration)
+    } else {
+      log(`No ${duration} subs need update`)
+    }
   }
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export default {
   Airtable,
   RecordsUpdater,
