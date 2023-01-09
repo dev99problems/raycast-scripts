@@ -23,7 +23,6 @@ function fill_with_spaces(count) {
   return Array.new(count + 1).join(' ')
 }
 
-
 function reset_HMS (date) {
   date?.setHours('0')
   date?.setMinutes('0')

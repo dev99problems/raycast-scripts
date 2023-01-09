@@ -59,12 +59,12 @@ class RecordsUpdater extends Airtable {
     })
   }
 
-  async update_valid_until_field(subs = []) {
+  async update_valid_until_field(past_subs = [], duration, current_date) {
     const subs_updates = []
-    subs.forEach(sub => {
+    past_subs.forEach(sub => {
       const should_be_renewed = sub.fields['Renew']
       const payment_date = sub.fields['Payment date']
-      const new_date = this.calc_next_payment_date(payment_date)
+      const new_date = this.calc_next_payment_date(payment_date, duration, current_date)
 
       if (should_be_renewed) {
         subs_updates.push({
@@ -77,7 +77,7 @@ class RecordsUpdater extends Airtable {
     })
 
     try {
-      const res = await this.update_records({
+      const res = subs_updates.length && await this.update_records({
         records: subs_updates
       })
       return res
@@ -112,10 +112,8 @@ class RecordsUpdater extends Airtable {
     return new Date().getDate() === 1
   }
 
-  // NOTE: this doesn't seem to work correct for updating dates,
-  // on year change, like 2022-12-10 -> 2023-01-10 | last time it did 2022-02-10 instead
-  calc_next_payment_date(curr_payment_date, current_month = new Date().getMonth()) {
-    const d = new Date(curr_payment_date)
+  _calc_next_monthly_date(payment_date, current_month = new Date().getMonth()) {
+    const d = new Date(payment_date)
     const date = d.getDate()
     const year = d.getFullYear()
 
@@ -146,6 +144,7 @@ class RecordsUpdater extends Airtable {
   }
 }
 
+// eslint-disable-next-line import/no-unused-modules
 export default {
   Airtable,
   RecordsUpdater,
