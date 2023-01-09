@@ -86,15 +86,19 @@ class RecordsUpdater extends Airtable {
     }
   }
 
-  async update_next_payment_field(subs = [], duration) {
-    const subs_updates = subs.map(sub => {
+  async update_next_payment_field(subs = [], duration, current_date) {
+    const subs_updates = []
+    subs.forEach(sub => {
+      const should_be_renewed = sub.fields['Renew']
       const payment_date = sub.fields['Payment date']
-      const new_date = this.calc_next_payment_date(payment_date, duration)
-      return {
-        id: sub.id,
-        fields: {
-          'Payment date': new_date
-        }
+      const new_date = this.calc_next_payment_date(payment_date, duration, current_date)
+      if (should_be_renewed) {
+        subs_updates.push({
+          id: sub.id,
+          fields: {
+            'Payment date': new_date
+          }
+        })
       }
     })
 
@@ -160,12 +164,30 @@ class RecordsUpdater extends Airtable {
     return { active_subs, past_subs }
   }
 
-  async update_airtable_records({ active_subs, past_subs, duration }) {
-    log(`Amount of ${duration} subscriptions to update: ${past_subs?.length}`)
-    past_subs?.length && await this.update_valid_until_field(past_subs)
+  async update_monthly_records(active_subs, past_subs) {
+    const duration = 'monthly'
+    if (past_subs?.length) {
+      log(`Amount of ${duration} subs to consider update: ${past_subs?.length}`)
+
+      await this.update_valid_until_field(past_subs, duration)
+    } else {
+      log(`No ${duration} subs need "valid_unitl" update`)
+    }
 
     // Update payment dates on 1-st day of Month
-    this.is_first_day_of_month() && await this.update_next_payment_field(active_subs)
+    this.is_first_day_of_month() && await this.update_next_payment_field(active_subs, duration)
+  }
+
+  async update_yearly_records(past_subs) {
+    const duration = 'yearly'
+    if (past_subs?.length) {
+      log(`Amount of ${duration} subs to consider update: ${past_subs?.length}`)
+
+      await this.update_valid_until_field(past_subs, duration)
+      await this.update_next_payment_field(past_subs, duration)
+    } else {
+      log(`No ${duration} subs need update`)
+    }
   }
 }
 

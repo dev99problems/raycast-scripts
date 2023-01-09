@@ -12,7 +12,7 @@
     "deploy": "npx wrangler publish",
     "test": "NODE_OPTIONS=--experimental-vm-modules npx jest",
     "test:current": "npm test --testPathPattern airtable",
-    "lint": "npx eslint src/"
+    "lint": "npx eslint --max-warnings 2 src/"
   },
   "devDependencies": {
     "eslint": "8.31.0",
