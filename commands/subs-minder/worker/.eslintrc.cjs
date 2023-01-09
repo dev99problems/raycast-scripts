@@ -4,17 +4,17 @@ module.exports = {
     es2021: true,
     jest: true,
   },
-  extends: "eslint:recommended",
+  extends: 'eslint:recommended',
   plugins: [
     'import'
   ],
   overrides: [
   ],
   parserOptions: {
-    ecmaVersion: "latest",
-    sourceType: "module"
+    ecmaVersion: 'latest',
+    sourceType: 'module'
   },
   rules: {
-    "import/no-unused-modules": [1, { unusedExports: true }]
+    'import/no-unused-modules': [1, { unusedExports: true }]
   }
 }
