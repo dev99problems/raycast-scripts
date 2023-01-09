@@ -128,9 +128,9 @@ class RecordsUpdater extends Airtable {
 
     // in human readable form the JS month should be +1,
     // because of the nature of months in JS and other langs is usually 0..11
-    const new_date = `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
+    const new_date = `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}`
 
-    return format_as_ISO(new_date)
+    return format_as_ISO(new_date) //e.g. 2022-12-28
   }
 
   _calc_next_yearly_date(payment_date, current_year = new Date().getFullYear()) {
@@ -144,7 +144,7 @@ class RecordsUpdater extends Airtable {
 
     const new_date = `${next_payment_year}-${month + 1}-${next_payment_date}`
 
-    return format_as_ISO(new_date) //e.g. 2022-12-28
+    return format_as_ISO(new_date)
   }
 
   calc_next_payment_date(payment_date, duration, current_date = {}) {
