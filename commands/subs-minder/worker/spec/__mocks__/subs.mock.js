@@ -78,11 +78,11 @@ const active_yearly_subs = [
       Active: true,
       Price: 25,
       Duration: 'yearly',
-      'Valid until': '2022-12-03',
+      'Valid until': '2022-12-19',
       Type: [
         'Services'
       ],
-      'Payment date': '2022-12-03'
+      'Payment date': '2022-12-19'
     }
   },
   {
@@ -93,11 +93,11 @@ const active_yearly_subs = [
       Active: true,
       Price: 44,
       Duration: 'yearly',
-      'Valid until': '2023-01-27',
+      'Valid until': '2022-12-09',
       Type: [
         'Services'
       ],
-      'Payment date': '2022-11-30'
+      'Payment date': '2022-12-09'
     }
   },
 ]

@@ -1,7 +1,7 @@
 import fetch from 'node-fetch'
 import data_mock from './dev/data.json' assert { type: 'json' }
 import env from './env.js'
-import { log, error } from './utils.js'
+import { log, error, format_date_with_extra_zeroes } from './utils.js'
 
 // NOTE: had to write this wrapper myself, because Airtable JS package
 // doesn't work properly in CF Worker runtime
@@ -52,7 +52,7 @@ class RecordsUpdater extends Airtable {
   }
 
   get_past_subs(active_subs, today_date = new Date()) {
-    return active_subs?.filter(({ fields: sub}) => {
+    return active_subs?.filter(({ fields: sub }) => {
       const payment_date = sub['Payment date']
 
       return new Date(payment_date) < today_date
@@ -86,10 +86,10 @@ class RecordsUpdater extends Airtable {
     }
   }
 
-  async update_next_payment_field(subs = []) {
+  async update_next_payment_field(subs = [], duration) {
     const subs_updates = subs.map(sub => {
-      const date = sub.fields['Payment date']
-      const new_date = this.calc_next_payment_date(date)
+      const payment_date = sub.fields['Payment date']
+      const new_date = this.calc_next_payment_date(payment_date, duration)
       return {
         id: sub.id,
         fields: {
@@ -124,7 +124,32 @@ class RecordsUpdater extends Airtable {
 
     // in human readable form the JS month should be +1,
     // because of the nature of months in JS and other langs is usually 0..11
-    return `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
+    const new_date = `${next_payment_year}-${next_payment_month + 1}-${next_payment_date}` //e.g. 2022-12-28
+
+    return format_date_with_extra_zeroes(new_date)
+  }
+
+  _calc_next_yearly_date(payment_date, current_year = new Date().getFullYear()) {
+    const d = new Date(payment_date)
+    const date = d.getDate()
+    const month = d.getMonth()
+
+    const next_payment_year = current_year + 1
+    const next_year_last_date_of_month = new Date(next_payment_year, month + 1, 0).getDate()
+    const next_payment_date = Math.min(next_year_last_date_of_month, date)
+
+    const new_date = `${next_payment_year}-${month + 1}-${next_payment_date}`
+
+    return format_date_with_extra_zeroes(new_date) //e.g. 2022-12-28
+  }
+
+  calc_next_payment_date(payment_date, duration, current_date = {}) {
+    const { month, year } = current_date
+    if (duration === 'monthly') {
+      return this._calc_next_monthly_date(payment_date, month)
+    } else if (duration === 'yearly') {
+      return this._calc_next_yearly_date(payment_date, year)
+    }
   }
 
   split_subs(subs, duration, today_date = new Date()) {

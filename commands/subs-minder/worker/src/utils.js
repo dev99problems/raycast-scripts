@@ -2,7 +2,7 @@ const log = console.log
 const error = console.error
 
 function log_keys(obj = {}) {
-  Object.keys(obj).forEach(key => log(key)) 
+  Object.keys(obj).forEach(key => log(key))
 }
 
 function to_capital_case(str) {
@@ -23,7 +23,7 @@ function fill_with_spaces(count) {
   return Array.new(count + 1).join(' ')
 }
 
-function reset_HMS (date) {
+function reset_HMS(date) {
   date?.setHours('0')
   date?.setMinutes('0')
   date?.setSeconds('0')
@@ -31,7 +31,19 @@ function reset_HMS (date) {
   return date
 }
 
-export { 
+function format_date_with_extra_zeroes(datestr) {
+  const [year, month, date] = datestr?.split('-') || []
+  if (!year || !month || !date) {
+    return ''
+  }
+
+  const updated_month = month < 10 ? `0${month}` : month
+  const update_date = date < 10 ? `0${date}` : date
+
+  return `${year}-${updated_month}-${update_date}`
+}
+
+export {
   log,
   error,
   log_keys,
@@ -39,4 +51,5 @@ export {
   format_date,
   fill_with_spaces,
   reset_HMS,
+  format_date_with_extra_zeroes,
 }
