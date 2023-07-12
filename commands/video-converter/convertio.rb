@@ -38,7 +38,10 @@ include FS
 
 def convert(filename)
   input, output = Utils.get_path(filename)
-  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1920:1024 -preset slow -crf 18 #{output.inspect} -y"
+  # scale=1920:-2 needed because of wish to set only one side.
+  # usually the ommited side will be set as -1, but some codecs needs a value multiple to 2,
+  # so -2 is the answer http://trac.ffmpeg.org/wiki/Scaling#KeepingtheAspectRatio
+  command = "ffmpeg -i #{input.inspect} -hide_banner -loglevel error -vf scale=1920:-2 -preset slow -crf 18 #{output.inspect} -y"
   # async
   fork { exec(command) }
 end
