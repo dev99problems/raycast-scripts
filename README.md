@@ -3,16 +3,13 @@
     <h1>raycast-scripts</h1>
 </div>
 
-Home of **dev99problems'** `Raycast` daily routine scripts
+Home of **dev99problems'** self-written `Raycast` scripts
 
 ## Raycast
-[raycastapp](https://www.raycast.com/) is a kind of tool, that can be described as `Spotlight` on steroids. 
-It is **simple**, **flexible**, does not require any **~~paid subscription~~** at the moment, and provides a great functionality
-of interacting with a lot of apps on your MacOS, not opening directly.
+[raycastapp](https://www.raycast.com/)  is ~~Spotlight on steroids~~ is a blazingly fast, extendable MacOS app launcher and way more!
 
-Another **killer feature** — the ability to run scripts at `the fingertips `.
-So `this repo` is a home for my personal `scripts`, which I use pretty often. Nothing major, no rocket science,
-just the small simple things, which `make my life easier`.
+Most of these **raycast scripts** are used on daily basis. Nothing major, 
+just small simple things, which **make my life easier**.
 
 <br/>
 
@@ -65,7 +62,7 @@ Even though, `Raycast` has this functionality `out of the box`, if you use your 
 projects and **private** projects of your work `organization`, you often need to request the broader list of `access` in your 
 organization for this integration to be able to get your `work pull-requests` and it may be a problem.
 
-**`So to avoid those`** restrictions and additional access requests, this little fellow was implemented.
+**`So to avoid these`** restrictions and additional access requests, this little fellow was implemented.
 
 <br/>
 
@@ -73,7 +70,7 @@ organization for this integration to be able to get your `work pull-requests` an
 ### ✂️ trim:link
 
 Trims the meta data from [Great Suspender](https://chrome.google.com/webstore/detail/the-great-suspender/jaekigmcljkkalnicnjoafgfjoefkpeg?hl=en) links.
-Works pretty the same as [great-suspender-link-trimmer](https://github.com/dev99problems/great-suspender-link-trimmer)
+Works pretty much the same as [great-suspender-link-trimmer](https://github.com/dev99problems/great-suspender-link-trimmer)
 
 https://user-images.githubusercontent.com/6503508/137031968-ce1e2837-5a70-4e11-939f-97150e248289.mov
 
