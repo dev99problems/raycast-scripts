@@ -6,10 +6,11 @@ module Utils # :nodoc:
     date.day == today.day && date.month == today.month
   end
 
-  def self.get_path(filename)
-    # NOTE: you should have this INPUT/OUTPUT passed in initialize
-    input_filepath = "#{INPUT}/#{filename}"
-    output_filepath = "#{OUTPUT}/#{filename}"
+  def self.get_file_paths(dirs, filename)
+    input_dir, output_dir = dirs
+
+    input_filepath = "#{input_dir}/#{filename}"
+    output_filepath = "#{output_dir}/#{filename}"
 
     [input_filepath, output_filepath]
   end
