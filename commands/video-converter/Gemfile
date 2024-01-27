@@ -16,6 +16,5 @@ end
 group :test do
   gem "minitest", "~> 5.21"
   gem "minitest-reporters", "~> 1.6"
+  gem "timecop", "~> 0.9.8"
 end
-
-
