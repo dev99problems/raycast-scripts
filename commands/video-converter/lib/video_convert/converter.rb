@@ -17,7 +17,7 @@ module VideoConvert
     end
 
     def convert(filename)
-      input, output = Utils.get_path(filename)
+      input, output = Utils.get_file_paths([@input, @output], filename)
       # scale=1920:-2 needed because of wish to set only one side.
       # usually the ommited side will be set as -1, but some codecs needs a value multiple to 2,
       # so -2 is the answer http://trac.ffmpeg.org/wiki/Scaling#KeepingtheAspectRatio
@@ -29,7 +29,7 @@ module VideoConvert
 
     def get_files_in_scope(input_files, output_files)
       input_files.select do |filename|
-        input, = Utils.get_path(filename)
+        input, = Utils.get_file_paths([@input, @output], filename)
 
         creation_date = File.birthtime(input)
         already_converted = output_files.include?(filename)
