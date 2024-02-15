@@ -4,6 +4,8 @@
 
 AllCops:
   TargetRubyVersion: 2.6
+  Exclude:
+    - 'Guardfile'
 
 Style/StringLiterals:
   Enabled: true
