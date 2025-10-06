@@ -3,7 +3,7 @@
 module Utils # :nodoc:
   def self.created_today?(date)
     today = Time.now
-    date.day == today.day && date.month == today.month
+    date.day == today.day && date.month == today.month && date.year == today.year
   end
 
   def self.get_file_paths(dirs, filename)
