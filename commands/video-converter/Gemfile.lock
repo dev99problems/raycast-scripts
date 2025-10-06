@@ -4,7 +4,7 @@ PATH
     video_convert (0.0.1)
 
 GEM
-  remote: https://rubygems.org/
+  remote: https://gem.coop/
   specs:
     ansi (1.5.0)
     ast (2.4.2)
@@ -83,6 +83,7 @@ GEM
 
 PLATFORMS
   arm64-darwin-22
+  arm64-darwin-24
 
 DEPENDENCIES
   guard
